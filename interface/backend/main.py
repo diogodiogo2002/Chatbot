@@ -66,7 +66,7 @@ def chatbot_respond(user_input: str) -> str:
     for chunk in llm.stream(rag_prompt):
         full_response += chunk.content
     return full_response
-
+#ola
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     reply = chatbot_respond(request.text)
