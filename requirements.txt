@@ -1,0 +1,9 @@
+fastapi
+python-dotenv
+langchain
+langchain-community
+langchain-chroma
+langchain-text-splitters
+huggingface-hub
+chromadb
+PyPDFDirectoryLoader
