@@ -83,9 +83,8 @@ Este widget conecta-se ao backend e permite fazer perguntas relacionadas com os 
 
 ## 📌 Notas Finais
 
-- O sistema foi desenvolvido para uso local e educativo.
 - A API da Together pode ter limites gratuitos. Usa com moderação ou configura uma conta paga se necessário.
 
 ---
 
-Desenvolvido com 💻 por Rodrigo Gonçalves
+Desenvolvido por Rodrigo Gonçalves e Diogo Diogo 😤
