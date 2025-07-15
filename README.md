@@ -9,7 +9,7 @@ Este projeto é um chatbot baseado em RAG (Retrieval-Augmented Generation) que p
 ├─ docs                       # PDF(s) a serem carregados
 ├─ interface/
 |  ├── backend/
-|  │   ├── ingest.py               # Indexação de documentos PDF
+|  │   ├── ingest_database.py               # Indexação de documentos PDF
 |  │   ├── main.py                 # Backend FastAPI com RAG
 |  │   └── chroma_db/              # Base de dados vetorial persistente
 |  ├── frontend/
@@ -52,7 +52,7 @@ Depois corre o script de ingestão:
 
 ```bash
 cd interface/backend
-python ingest.py
+python ingest_database.py
 ```
 
 Este passo carrega os documentos e armazena os embeddings na base de dados vetorial (`chroma_db/`).
