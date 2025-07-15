@@ -1,11 +1,9 @@
 fastapi
-uvicorn
 python-dotenv
 langchain
 langchain-community
 langchain-chroma
 langchain-text-splitters
 huggingface-hub
-pydantic
 chromadb
-PyPDF
+PyPDFDirectoryLoader
