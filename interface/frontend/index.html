@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Widget</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Bolinha do chat -->
+  <div id="chat-toggle">💬</div>
+
+  <!-- Caixa do chat escondida inicialmente -->
+  <div id="chat-widget" class="hidden">
+    <div id="chat-box"></div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Escreve aqui..." required />
+      <button type="submit">Enviar ▶</button>
+    </form>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
