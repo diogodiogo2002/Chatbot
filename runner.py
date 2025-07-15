@@ -21,3 +21,4 @@ caminho_html = os.path.abspath("interface/frontend/index.html")
 # Abrir no navegador
 webbrowser.open(f"file://{caminho_html}")
 
+print("ola")
