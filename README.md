@@ -19,16 +19,16 @@ Este projeto é um **chatbot com RAG (Retrieval-Augmented Generation)** que resp
 ## 📁 Estrutura do Projeto
 
 ```
-.
-├── backend/
-│   ├── ingest.py               # Indexação de documentos PDF
-│   ├── main.py                 # Backend FastAPI com RAG
-│   └── chroma_db/              # Base de dados vetorial persistente
-├── docs/                       # PDF(s) a serem carregados
-├── frontend/
-│   ├── index.html              # Interface do widget
-│   ├── style.css               # Estilos visuais
-│   └── script.js               # Lógica do frontend
+├─ docs                       # PDF(s) a serem carregados
+├─interface/
+|  ├── backend/
+|  │   ├── ingest.py               # Indexação de documentos PDF
+|  │   ├── main.py                 # Backend FastAPI com RAG
+|  │   └── chroma_db/              # Base de dados vetorial persistente
+|  ├── frontend/
+|  │   ├── index.html              # Interface do widget
+|  │   ├── style.css               # Estilos visuais
+|  │   └── script.js               # Lógica do frontend
 ├── .env                        # Chave TOGETHER_API_KEY
 ├── README.md                   # Este ficheiro
 ```
