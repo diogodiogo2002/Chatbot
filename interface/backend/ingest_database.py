@@ -4,13 +4,22 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from uuid import uuid4
 import os
+import shutil
 # import the .env file
 from dotenv import load_dotenv
 load_dotenv()
 
+
+
 # configuration
 DATA_PATH = r"docs"
 CHROMA_PATH = r"interface/backend/chroma_db"
+
+if os.path.exists(CHROMA_PATH):
+    shutil.rmtree(CHROMA_PATH)
+    print("Base de dados Chroma eliminada com sucesso.")
+else:
+    print("Pasta chroma_db não encontrada.")
 
 # initiate the embeddings model
 embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
