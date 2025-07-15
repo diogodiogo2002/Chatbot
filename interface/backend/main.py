@@ -14,6 +14,7 @@ together_api_key = os.getenv("TOGETHER_API_KEY")
 CHROMA_PATH = "chroma_db"
 MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
 
+
 embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 llm = ChatOpenAI(
     temperature=0.0,
