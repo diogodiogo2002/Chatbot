@@ -22,14 +22,7 @@ Este projeto é um chatbot baseado em RAG (Retrieval-Augmented Generation) que p
 
 ## ⚙️ Instalação
 
-1. **Clonar o repositório:**
-
-```bash
-git clone https://github.com/seu-usuario/seu-projeto.git
-cd seu-projeto
-```
-
-2. **Criar ambiente virtual (opcional mas recomendado):**
+1. **Criar ambiente virtual (opcional mas recomendado):**
 
 ```bash
 python -m venv venv
@@ -37,7 +30,7 @@ source venv/bin/activate   # Linux/macOS
 venv\Scripts\activate      # Windows
 ```
 
-3. **Instalar dependências:**
+2. **Instalar dependências:**
 
 ```bash
 pip install -r requirements.txt
@@ -45,7 +38,7 @@ pip install -r requirements.txt
 
 > ⚠️ Certifica-te de ter o Python 3.10+ instalado.
 
-4. **Criar o ficheiro `.env` com a tua chave da API Together:**
+3. **Criar o ficheiro (já criado) `.env` com a tua chave da API Together:**
 
 ```
 TOGETHER_API_KEY=coloca_aqui_a_tua_chave
