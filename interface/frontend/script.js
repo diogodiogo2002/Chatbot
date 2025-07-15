@@ -5,12 +5,20 @@ const chatWidget = document.getElementById("chat-widget");
 const chatToggle = document.getElementById("chat-toggle");
 
 let can_reply = true;
-
+let first_open = true;
 // Abrir/fechar o widget ao clicar na bolinha
 chatToggle.addEventListener("click", () => {
   chatWidget.classList.toggle("hidden");
   if (!chatWidget.classList.contains("hidden")) {
     input.focus();
+
+    // Enviar mensagem "Olá" apenas na primeira abertura
+    if (first_open) {
+      setTimeout(() => {
+        addMessage("Olá! Como posso ajudar?", "bot");
+      }, 300);
+      first_open = false;
+    }
   }
 });
 

@@ -12,11 +12,11 @@ together_api_key = os.getenv("TOGETHER_API_KEY")
 
 # Configurações
 CHROMA_PATH = "chroma_db"
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
+MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
 
 embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 llm = ChatOpenAI(
-    temperature=0.5,
+    temperature=0.0,
     openai_api_key=together_api_key,
     openai_api_base="https://api.together.xyz/v1",
     model_name=MODEL_NAME
@@ -47,10 +47,15 @@ class ChatResponse(BaseModel):
 
 def chatbot_respond(user_input: str) -> str:
     docs = retriever.invoke(user_input)
+    
     knowledge = "\n\n".join([f"Fonte: {doc.metadata['source']}\n{doc.page_content}" for doc in docs])
     rag_prompt = f"""
-    You are an assistant which answers questions based solely on the information provided in "The knowledge" section.
-    Do not use your internal knowledge.
+    You are a strict assistant. You must only answer questions using the information explicitly found in the "Knowledge" section below.
+
+    - If the answer is not present in the knowledge, reply with: "Desculpa, não encontrei essa informação nos documentos."
+    - Do not use any of your own knowledge or make assumptions.
+    - Do not translate, paraphrase or expand the content.
+    - Only use what is explicitly written.
 
     The question: {user_input}
 
