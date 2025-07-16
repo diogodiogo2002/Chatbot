@@ -7,3 +7,4 @@ langchain-text-splitters
 huggingface-hub
 chromadb
 PyPDFDirectoryLoader
+pydantic
