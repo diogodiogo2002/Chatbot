@@ -30,7 +30,7 @@ vector_store = Chroma(
     embedding_function=embeddings_model,
     persist_directory=CHROMA_PATH,
 )
-retriever = vector_store.as_retriever(search_kwargs={'k': 5})
+retriever = vector_store.as_retriever(search_kwargs={'k': 10})
 
 app = FastAPI()
 
@@ -58,24 +58,43 @@ def chatbot_respond(user_input: str) -> str:
     #Junta os conteúdos dos documentos encontrados
     knowledge = "\n\n".join([f"Fonte: {doc.metadata['source']}\n{doc.page_content}" for doc in docs])
 
+    sources = set()
+    for doc in docs:
+        src = doc.metadata.get("source", "Desconhecido")
+        page = doc.metadata.get("page", "")
+        if page:
+            sources.add(f"{src} (página {page})")
+        else:
+            sources.add(f"{src}")
+
     #Cria o prompt do RAG, dizendo explicitamente ao modelo para responder apenas com base no conteúdo dos documentos.
     rag_prompt = f"""
     You are a strict assistant. You must only answer questions using the information explicitly found in the "Knowledge" section below.
 
-    - If the answer is not present in the knowledge, reply with: "Desculpa, não encontrei essa informação nos documentos."
-    - Do not use any of your own knowledge or make assumptions.
-    - Do not translate, paraphrase or expand the content.
-    - Only use what is explicitly written.
+    You must answer the user question using **only** the content found in the "Knowledge" section below.
 
+    Rules:
+    - Do not invent or add information.
+    - Do not paraphrase or summarize: keep the information complete.
+    - Do not change the structure or tone; answer as directly as possible.
+    - If the answer is not found, reply: "Desculpa, não encontrei essa informação nos documentos."
+    - If the content is in English, translate it to Portuguese faithfully.
     The question: {user_input}
 
     The knowledge: {knowledge}
     """
+
     #Usa stream para receber a resposta em tempo real (chunk por chunk) do modelo e junta em full_response
     full_response = ""
     for chunk in llm.stream(rag_prompt):
         full_response += chunk.content
+        
+    
+    if sources:
+        full_response += "\n\n🔗 Fontes consultadas:\n" + "\n".join(f"- {s}" for s in sources)
+
     return full_response
+    
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat", response_model=ChatResponse)

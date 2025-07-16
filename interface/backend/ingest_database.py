@@ -41,7 +41,7 @@ raw_documents = loader.load()
 #Retorna uma lista de Document com page_content e metadata
 for doc in raw_documents:
     doc.metadata["source"] = os.path.basename(doc.metadata["source"])
-
+    doc.metadata["page"] = doc.metadata.get("page", 1)
 # Divide o texto em chunks
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=300,
@@ -58,3 +58,5 @@ uuids = [str(uuid4()) for _ in range(len(chunks))]
 
 # Adciciona os chunks à base de dados Chroma
 vector_store.add_documents(documents=chunks, ids=uuids)
+
+print(f"Base de dados Chroma criada com {len(chunks)} chunks de texto.")
