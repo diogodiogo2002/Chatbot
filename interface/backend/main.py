@@ -122,7 +122,14 @@ def chatbot_respond(user_input: str) -> dict:
     full_response = ""
     for chunk in llm.stream(rag_prompt):
         full_response += chunk.content
-        
+
+    if sources:
+        info = "\n\n🔗 Fontes consultadas:\n" 
+
+    info += "".join(f"{src}" for src in sources)
+
+    return full_response, info
+       
     related_suggestions = generate_suggestions(user_input,knowledge)
 
     return {
@@ -131,20 +138,12 @@ def chatbot_respond(user_input: str) -> dict:
         "suggestions":related_suggestions
     }
 
-    #if sources:
-       # full_response += "\n\n🔗 Fontes consultadas:\n" + "\n".join(f"- {s}" for s in sources)
 
-    #return full_response
     
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    result = chatbot_respond(request.text)
-    return JSONResponse(content=result)
-
-#@app.post("/chat", response_model=ChatResponse)
-#async def chat_endpoint(request: ChatRequest):
-#    reply = chatbot_respond(request.text)
-#    return {"reply": reply}
+    reply, info = chatbot_respond(request.text)
+    return {"reply": reply, "info": info}
 

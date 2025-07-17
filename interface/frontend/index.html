@@ -14,14 +14,14 @@
   <!-- Caixa do chat escondida inicialmente -->
   <div id="chat-widget" class="hidden">
     <div id="chat-box"></div>
-    <div id="suggested-questions" class="suggested-container"></div>
-    <form id="chat-form" autocomplete="off">
-      <input type="text" id="user-input" maxlength="100" placeholder="Escreve aqui..." required />
-      <button type="submit">Enviar ▶</button>
+    <form id="chat-form">
+      <textarea id="user-input" rows="1" maxlength="100" placeholder="Escreve aqui..."></textarea>
+      <div class="char-counter" id="char-counter">100</div>
+      <button type="submit">Enviar</button>
     </form>
   </div>
-  
+<script src="script/chat-core.js"></script>
+<script src="script/chat-events.js"></script>
 
-<script src="script.js"></script>
 </body>
 </html>
