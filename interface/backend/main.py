@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
+from deep_translator import GoogleTranslator
+
+
 
 
 load_dotenv()
@@ -13,9 +16,9 @@ together_api_key = os.getenv("TOGETHER_API_KEY")
 
 # Configurações da localização da base de dados e do modelo
 CHROMA_PATH = "chroma_db"
-MODEL_NAME = "google/gemma-3n-E4B-it"
+MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
 
-#Cria o modelo de embeddings e o modelo de linguagem
+# Inicia o modelo de embeddings
 embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 llm = ChatOpenAI(
     temperature=0.0, # Temperatura 0 para respostas mais consistentes
@@ -52,9 +55,15 @@ class ChatResponse(BaseModel):
     reply: str
 
 
+
 #Recebe a pergunta do utilizador e responde com base nos documentos
 def chatbot_respond(user_input: str) -> str:
-    docs = retriever.invoke(user_input)
+
+    # Traduz de PT para EN
+    translated_query = GoogleTranslator(source='pt', target='en').translate(user_input)
+
+    docs = retriever.invoke(translated_query)
+    
     #Junta os conteúdos dos documentos encontrados
     knowledge = "\n\n".join([f"Fonte: {doc.metadata['source']}\n{doc.page_content}" for doc in docs])
 
@@ -75,10 +84,12 @@ def chatbot_respond(user_input: str) -> str:
 
     Rules:
     - Do not invent or add information.
-    - Do not paraphrase or summarize: keep the information complete.
+    - Sumarize the information in a concise and clear manner.
     - Do not change the structure or tone; answer as directly as possible.
     - If the answer is not found, reply: "Desculpa, não encontrei essa informação nos documentos."
-    - If the content is in English, translate it to Portuguese faithfully.
+    - Your answer must be entirely in European Portuguese.
+    - If the knowledge is in English, you must translate it faithfully to Portuguese.
+
     The question: {user_input}
 
     The knowledge: {knowledge}
