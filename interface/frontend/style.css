@@ -100,3 +100,24 @@ button {
   cursor: pointer;
   font-size: 14px;
 }
+
+.suggested-container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.suggestion {
+  background-color: #131212;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.suggestion:hover {
+  background-color: #e70c0c;
+}

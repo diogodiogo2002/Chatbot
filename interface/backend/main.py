@@ -7,7 +7,8 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
 from deep_translator import GoogleTranslator
-
+from fastapi.responses import JSONResponse
+from langchain_core.messages import HumanMessage
 
 
 
@@ -54,10 +55,32 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
 
+def generate_suggestions(question:str, knowledge: str) -> list:
+    prompt= f"""
+    Abaixo está uma pergunta de um utilizador e informação relevante retirada de documentos.
+
+    Baseando-te **apenas** nesta informação, sugere 3 perguntas relacionadas que o utilizador poderia fazer a seguir para obter mais detalhes. As perguntas devem ser em português europeu e curtas, claras e diretas.
+
+    ❓ Pergunta do utilizador:
+    {question}
+
+    📚 Informação relevante:
+    {knowledge}
+
+    🎯 Gera apenas 3 perguntas diretamente relacionadas com o tema, uma por linha, sem explicações.
+    """
+   
+
+    response = llm.invoke([HumanMessage(content=prompt)])
+
+    suggestions_text = response.content if hasattr(response, 'content') else response
+    suggestions = [line.strip() for line in suggestions_text.split('\n') if line.strip()]
+    return suggestions[:3]  # Limita a 3 sugestões
+
 
 
 #Recebe a pergunta do utilizador e responde com base nos documentos
-def chatbot_respond(user_input: str) -> str:
+def chatbot_respond(user_input: str) -> dict:
 
     # Traduz de PT para EN
     translated_query = GoogleTranslator(source='pt', target='en').translate(user_input)
@@ -100,16 +123,28 @@ def chatbot_respond(user_input: str) -> str:
     for chunk in llm.stream(rag_prompt):
         full_response += chunk.content
         
-    
-    if sources:
-        full_response += "\n\n🔗 Fontes consultadas:\n" + "\n".join(f"- {s}" for s in sources)
+    related_suggestions = generate_suggestions(user_input,knowledge)
 
-    return full_response
+    return {
+        "reply": full_response.strip(),
+        "sources": list(sources),
+        "suggestions":related_suggestions
+    }
+
+    #if sources:
+       # full_response += "\n\n🔗 Fontes consultadas:\n" + "\n".join(f"- {s}" for s in sources)
+
+    #return full_response
     
 
 # Endpoint para receber perguntas do frontend e responder
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    reply = chatbot_respond(request.text)
-    return {"reply": reply}
+    result = chatbot_respond(request.text)
+    return JSONResponse(content=result)
+
+#@app.post("/chat", response_model=ChatResponse)
+#async def chat_endpoint(request: ChatRequest):
+#    reply = chatbot_respond(request.text)
+#    return {"reply": reply}
 
