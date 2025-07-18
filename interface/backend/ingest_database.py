@@ -5,6 +5,8 @@ from langchain_chroma import Chroma
 from uuid import uuid4
 import os
 import shutil
+from tqdm import tqdm
+
 # import the .env file
 from dotenv import load_dotenv
 load_dotenv()
@@ -38,6 +40,8 @@ loader = PyPDFDirectoryLoader(DATA_PATH)
 
 raw_documents = loader.load()
 
+print("Documentos carregados")
+
 #Retorna uma lista de Document com page_content e metadata
 for doc in raw_documents:
     doc.metadata["source"] = os.path.basename(doc.metadata["source"])
@@ -52,11 +56,18 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 
 chunks = text_splitter.split_documents(raw_documents)
+print("chunks criados")
+
 
 # Cria ids unicos para cada chunk
 uuids = [str(uuid4()) for _ in range(len(chunks))]
 
-# Adciciona os chunks à base de dados Chroma
-vector_store.add_documents(documents=chunks, ids=uuids)
+# Mostra barra de progresso ao adicionar os documentos
+print("A adicionar documentos à base de dados Chroma...")
+batch_size = 100
+for i in tqdm(range(0, len(chunks), batch_size), desc="Carregando"):
+    chunk_batch = chunks[i:i+batch_size]
+    uuid_batch = uuids[i:i+batch_size]
+    vector_store.add_documents(documents=chunk_batch, ids=uuid_batch)
 
-print(f"Base de dados Chroma criada com {len(chunks)} chunks de texto.")
+print("✅ Base de dados Chroma criada com sucesso.")
