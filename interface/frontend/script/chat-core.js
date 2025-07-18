@@ -16,27 +16,31 @@ function addMessage(text, sender, info_text) {
     contentWrapper.classList.add("bot-content");
 
     const msgText = document.createElement("div");
-    msgText.textContent = text;
+    msgText.innerText = text;
     msgText.classList.add("bot-text");
 
     const infoBox = document.createElement("div");
     infoBox.textContent = info_text;
-    infoBox.classList.add("info-box", "hidden");
+    infoBox.classList.add("info-box");
 
     const toggleBtn = document.createElement("button");
     toggleBtn.textContent = "ℹ️";
     toggleBtn.classList.add("info-toggle-outside");
 
     toggleBtn.addEventListener("click", () => {
-      if (toggleBtn.textContent === "ℹ️") {
+      const showingInfo = infoBox.classList.contains("visible");
+
+      if (showingInfo) {
+        // Ocultar info e mostrar texto normal
+        infoBox.classList.remove("visible");
+        msgText.classList.remove("hidden");
+        toggleBtn.textContent = "ℹ️";
+      } else {
+        // Mostrar info e esconder texto normal
+        msgText.classList.add("hidden");
+        infoBox.classList.add("visible");
         toggleBtn.textContent = "💬";
       }
-      else {
-        toggleBtn.textContent = "ℹ️";
-      }
-
-      msgText.classList.toggle("hidden");
-      infoBox.classList.toggle("hidden");
     });
 
     contentWrapper.appendChild(msgText);

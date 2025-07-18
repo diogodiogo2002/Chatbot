@@ -35,8 +35,8 @@ input.addEventListener("input", () => {
 
 // Evento de toggle do chat
 chatToggle.addEventListener("click", () => {
-  chatWidget.classList.toggle("hidden");
-  if (!chatWidget.classList.contains("hidden")) {
+  chatWidget.classList.toggle("visible");
+  if (!chatWidget.classList.contains("visible")) {
     input.focus();
 
     if (first_open) {
@@ -100,20 +100,4 @@ form.addEventListener("submit", async (e) => {
     addMessage("Erro de ligação ao servidor 😢", "bot");
   }
   can_reply = true;
-});
-
-suggestionBtn.addEventListener("mousemove", (e) => {
-  const rect = suggestionBtn.getBoundingClientRect();
-  const x = e.clientX - rect.left; // posição X do rato dentro do botão
-  const y = e.clientY - rect.top;  // posição Y do rato dentro do botão
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const rotateX = -(y - centerY) / 10; // ajusta a sensibilidade
-  const rotateY = (x - centerX) / 10;
-
-  suggestionBtn.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-});
-
-suggestionBtn.addEventListener("mouseleave", () => {
-  suggestionBtn.style.transform = "rotateX(0) rotateY(0)";
 });
