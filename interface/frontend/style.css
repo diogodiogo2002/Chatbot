@@ -197,3 +197,30 @@ button {
     from { opacity: 1; }
     to { opacity: 0.5; }
 }
+
+
+.suggestions-box {
+  display: flex;
+  justify-content: center; /* Encosta os botões à direita */
+  flex-wrap: wrap; /* Permite que os botões quebrem para a linha seguinte se necessário */
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.suggestion-btn {
+  font-size: 0.8rem; /* Botões mais pequenos */
+  padding: 5px 10px;
+  border: 1px solid #ccc; /* Borda branca suave */
+  background-color: rgb(0, 0, 0); /* Fundo branco */
+  border-radius: 30px; /* Bordas arredondadas */
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-btn:hover {
+  transform: translateY(2px); /* Afunda ligeiramente */
+  background-color: #ffffff;
+  border-color: #000000;
+  color: #000000
+}

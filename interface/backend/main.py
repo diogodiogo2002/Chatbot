@@ -128,22 +128,18 @@ def chatbot_respond(user_input: str) -> dict:
 
     info += "".join(f"{src}" for src in sources)
 
-    return full_response, info
+
        
     related_suggestions = generate_suggestions(user_input,knowledge)
 
-    return {
-        "reply": full_response.strip(),
-        "sources": list(sources),
-        "suggestions":related_suggestions
-    }
-
+    return full_response , info, related_suggestions
+        
 
     
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    reply, info = chatbot_respond(request.text)
-    return {"reply": reply, "info": info}
+    reply, info, related_suggestions= chatbot_respond(request.text)
+    return {"reply": reply, "info": info, "related_suggestions": related_suggestions}
 

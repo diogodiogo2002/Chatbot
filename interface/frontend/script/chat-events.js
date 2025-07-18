@@ -41,7 +41,7 @@ chatToggle.addEventListener("click", () => {
 
     if (first_open) {
       setTimeout(() => {
-        addMessage("Olá! Como posso ajudar?", "bot");
+        ("Olá! Como posso ajudar?", "bot");
       }, 300);
       first_open = false;
     }
@@ -72,11 +72,48 @@ form.addEventListener("submit", async (e) => {
     const data = await response.json();
     const botReply = data.reply || "Erro ao responder 😵";
     const info_text = data.info || "Nenhuma informação adicional disponível.";
-
+    const sugestions = data.related_suggestions || "Sem sugestões disponíveis.";
     addMessage(botReply, "bot", info_text);
     
+    if (sugestions.length > 0) {
+      const suggestionsBox = document.createElement("div");
+      suggestionsBox.classList.add("suggestions-box");
+
+      sugestions.forEach((suggestion) => {
+        const suggestionBtn = document.createElement("button");
+        suggestionBtn.textContent = suggestion;
+        suggestionBtn.classList.add("suggestion-btn");
+
+        suggestionBtn.addEventListener("click", () => {
+          input.value = suggestion;
+          input.dispatchEvent(new Event("input")); // Atualiza o contador de caracteres
+          form.requestSubmit();
+        });
+
+        suggestionsBox.appendChild(suggestionBtn);
+      });
+
+      chatBox.appendChild(suggestionsBox);    
+    }
+  
   } catch (error) {
     addMessage("Erro de ligação ao servidor 😢", "bot");
   }
   can_reply = true;
+});
+
+suggestionBtn.addEventListener("mousemove", (e) => {
+  const rect = suggestionBtn.getBoundingClientRect();
+  const x = e.clientX - rect.left; // posição X do rato dentro do botão
+  const y = e.clientY - rect.top;  // posição Y do rato dentro do botão
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = -(y - centerY) / 10; // ajusta a sensibilidade
+  const rotateY = (x - centerX) / 10;
+
+  suggestionBtn.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+suggestionBtn.addEventListener("mouseleave", () => {
+  suggestionBtn.style.transform = "rotateX(0) rotateY(0)";
 });
