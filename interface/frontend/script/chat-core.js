@@ -27,6 +27,25 @@ function addMessage(text, sender, info_text) {
     toggleBtn.textContent = "ℹ️";
     toggleBtn.classList.add("info-toggle-outside");
 
+    
+    const copyBtn = document.createElement("button");
+    copyBtn.textContent = "📋";
+    copyBtn.classList.add("copy-btn");
+    
+    copy_info = text; 
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(copy_info).then(() => {
+        copyBtn.textContent = "✅";
+        setTimeout(() => {
+          copyBtn.textContent = "📋";
+        }, 2000);
+      }).catch(err => {
+        console.error("Erro ao copiar para a área de transferência: ", err);
+      });
+    });
+
+
     toggleBtn.addEventListener("click", () => {
       const showingInfo = infoBox.classList.contains("visible");
 
@@ -35,21 +54,32 @@ function addMessage(text, sender, info_text) {
         infoBox.classList.remove("visible");
         msgText.classList.remove("hidden");
         toggleBtn.textContent = "ℹ️";
+        copy_info = text;
       } else {
         // Mostrar info e esconder texto normal
         msgText.classList.add("hidden");
         infoBox.classList.add("visible");
         toggleBtn.textContent = "💬";
+        copy_info = info_text;
       }
     });
 
-    contentWrapper.appendChild(msgText);
-    if (info_text != null) {
-      contentWrapper.appendChild(infoBox);
-      contentWrapper.appendChild(toggleBtn);
+  const buttonsWrapper = document.createElement("div");
+  buttonsWrapper.classList.add("buttons-wrapper");
+
+// Adicionar os botões ao container
+buttonsWrapper.appendChild(toggleBtn);
+buttonsWrapper.appendChild(copyBtn);
+  
+
+  contentWrapper.appendChild(msgText);
+
+  if (info_text != null) {
+    contentWrapper.appendChild(infoBox);
+    contentWrapper.appendChild(buttonsWrapper);
+      
+      msg.appendChild(contentWrapper);
     }
-    
-    msg.appendChild(contentWrapper);
   } else {
     msg.textContent = text;
   }

@@ -97,7 +97,7 @@ form.addEventListener("submit", async (e) => {
     }
   
   } catch (error) {
-    addMessage("Erro de ligação ao servidor 😢", "bot");
+    addMessage("Erro de ligação ao servidor 😢" + error, "bot");
   }
   can_reply = true;
 });
