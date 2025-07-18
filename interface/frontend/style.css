@@ -34,7 +34,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  
   cursor: pointer;
   box-shadow: var(--shadow);
   z-index: 999;
@@ -315,12 +314,3 @@ button[type="submit"]:hover {
   }
 }
 
-.icon {
-  color: white;
-  display: flex;
-  margin-left: 10px;
-  width: 60%;
-  height: 60%;
-  max-width: 60px;
-  max-height: 60px;
-}
