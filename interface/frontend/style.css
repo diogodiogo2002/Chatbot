@@ -246,10 +246,10 @@ button[type="submit"]:hover {
 
 .info-toggle-outside, .copy-btn {
   align-self: flex-start;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  width: 28px;
-  height: 28px;
+  background: transparent;
+  border: 1px solid transparent;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   font-size: 14px;
   color: white;
@@ -261,11 +261,16 @@ button[type="submit"]:hover {
   margin-top: 8px;
 }
 
-.info-toggle-outside:hover .copy-btn:hover{
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+.info-toggle-outside:hover, .copy-btn:hover{
+  color: var(--primary-color);
+  background-color: white;
+  transform: scale(1.3);
 }
 
+.rotated {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
 /* Suggestions */
 .suggestions-box {
   display: flex;
