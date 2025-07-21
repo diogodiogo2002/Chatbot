@@ -1,28 +1,36 @@
-
 # Chatbot com RAG e Widget Interativo
 
-Este projeto é um chatbot baseado em RAG (Retrieval-Augmented Generation) que permite ao utilizador interagir com documentos PDF carregados no sistema. A interface é fornecida através de um widget web leve, que comunica com um backend FastAPI.
+Este projeto implementa um chatbot baseado em RAG (Retrieval-Augmented Generation) com uma interface web interativa em forma de widget. O sistema permite consultar documentos PDF através de processamento de linguagem natural utilizando um modelo LLM hospedado via Together AI.
 
 ## 📁 Estrutura do Projeto
 
 ```
-├─ docs                       # PDF(s) a serem carregados
-├─ interface/
-|  ├── backend/
-|  │   ├── ingest_database.py               # Indexação de documentos PDF
-|  │   ├── main.py                 # Backend FastAPI com RAG
-|  │   └── chroma_db/              # Base de dados vetorial persistente
-|  ├── frontend/
-|  │   ├── index.html              # Interface do widget
-|  │   ├── style.css               # Estilos visuais
-|  │   └── script.js               # Lógica do frontend
-├── .env                        # Chave TOGETHER_API_KEY
-├── README.md                   # Este ficheiro
+├── docs/                       # Documentos PDF a serem indexados
+├── interface/
+│   ├── backend/
+│   │   ├── ingest_database.py  # Script para indexar documentos PDF
+│   │   ├── main.py             # Backend FastAPI com endpoint RAG
+│   │   └── chroma_db/          # Base de dados vetorial ChromaDB
+│   ├── frontend/
+│   │   ├── index.html          # Página principal do widget
+│   │   ├── style.css           # Estilos visuais do widget
+│   │   └── script/
+│   │       ├── chat-core.js    # Lógica principal do chatbot
+│   │       └── chat-events.js  # Manipulação de eventos e interacções
+├── runner.py                   # Script para iniciar backend e frontend juntos
+├── .env                        # Chave da API e variáveis de ambiente
+├── README.md                   # Documentação do projeto
+└── requirements.txt            # Dependências Python
 ```
 
-## ⚙️ Instalação
+## ⚙️ Requisitos
 
-1. **Criar ambiente virtual (opcional mas recomendado):**
+- Python 3.10+
+- Conta na Together AI com chave de API
+
+## 🚀 Configuração Rápida
+
+1. **Criar ambiente virtual:**
 
 ```bash
 python -m venv venv
@@ -36,55 +44,86 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 
-> ⚠️ Certifica-te de ter o Python 3.10+ instalado.
+3. **Configurar API Key:**
 
-3. **Criar o ficheiro (já criado) `.env` com a tua chave da API Together:**
+Crie um arquivo `.env` com o seguinte conteúdo:
 
 ```
-TOGETHER_API_KEY=coloca_aqui_a_tua_chave
+TOGETHER_API_KEY=sua_chave_aqui
 ```
 
-## 📥 Indexar Documentos
+## ↻ Fluxo de Trabalho
 
-Coloca os ficheiros `.pdf` na pasta `docs/`.
+1. **Indexar documentos:**
 
-Depois corre o script de ingestão:
+- Coloque os PDFs na pasta `docs/`
+- Execute:
 
 ```bash
 cd interface/backend
 python ingest_database.py
 ```
 
-Este passo carrega os documentos e armazena os embeddings na base de dados vetorial (`chroma_db/`).
+2. **Iniciar o sistema:**
 
-## 🚀 Iniciar o Backend
-
-A partir da pasta `interface/backend`, corre:
+- Opção 1 (manual):
 
 ```bash
+cd interface/backend
 uvicorn main:app --reload
 ```
 
-A API ficará disponível em `http://localhost:8000`.
+Depois, abra `interface/frontend/index.html` no navegador.
 
-## 🖥️ Usar o Widget
+- Opção 2 (automática com script):
 
-Abre o ficheiro `interface/frontend/index.html` diretamente num browser ou serve-o com um servidor local (por exemplo, extensão *Live Server* no VSCode).
+```bash
+python runner.py
+```
 
-Este widget conecta-se ao backend e permite fazer perguntas relacionadas com os documentos carregados.
+## 🌟 Funcionalidades do Widget
+
+- Interface flutuante e responsiva
+- Contador de caracteres com alertas visuais (warning e danger)
+- Botões interativos para:
+  - Expandir/ocultar fonte de consulta da resposta
+  - Copiar resposta para a área de transferência (clipboard)
+- Sugestões de perguntas automáticas
+
+
 
 ## 🧠 Tecnologias Utilizadas
 
-- **FastAPI** — Framework web para o backend
-- **ChromaDB** — Base de dados vetorial local
-- **LangChain** — Orquestração do sistema RAG
-- **Together AI** — Modelo LLM (via API)
-- **HTML/CSS/JS** — Interface simples e funcional
+| Componente    | Tecnologias                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| Backend       | FastAPI, ChromaDB, LangChain, HuggingFace Embeddings                 |
+| LLM           | Mistral-7B-Instruct-v0.3 via Together AI                             |
+| Frontend      | HTML5, CSS3, JavaScript Vanilla                                      |
+| Processamento | Retrieval-Augmented Generation (RAG), Tradução via Google Translator |
 
-## 📌 Notas Finais
+## 📌 Notas Adicionais
 
-- A API da Together pode ter limites gratuitos. Usa com moderação ou configura uma conta paga se necessário.
+1. Otimizações implementadas:
 
----
+   - Carregamento rápido (<2s)
+   - Baixo uso de memória
+   - Compatibilidade com Chrome, Firefox e Edge
 
-Desenvolvido por Rodrigo Gonçalves e Diogo Diogo 😤
+2. Limitações:
+
+   - Máximo de 100 caracteres por mensagem
+   - Apenas PDFs são suportados por enquanto
+   - Requer internet para comunicação com API externa
+
+3. Para desenvolvimento:
+
+   - Edita `style.css` para mudar visual
+   - Altera `chat-core.js` para modificar comportamento do bot
+   - Usa `chat-events.js` para mudar eventos e animações
+
+## 📄 Licença
+
+Este projeto é open-source sob a licença MIT. Consulta o ficheiro `LICENSE` para mais detalhes.
+
+Desenvolvido por Rodrigo Gonçalves e Diogo Diogo - 2025 😤
+
