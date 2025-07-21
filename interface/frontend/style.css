@@ -244,7 +244,7 @@ button[type="submit"]:hover {
 }
 
 
-.info-toggle-outside, .copy-btn {
+.info-toggle-outside, .copy-btn, .speak-btn {
   align-self: flex-start;
   background: transparent;
   border: 1px solid transparent;
@@ -261,7 +261,7 @@ button[type="submit"]:hover {
   margin-top: 8px;
 }
 
-.info-toggle-outside:hover, .copy-btn:hover{
+.info-toggle-outside:hover, .copy-btn:hover, .speak-btn:hover{
   color: var(--primary-color);
   background-color: white;
   transform: scale(1.3);
