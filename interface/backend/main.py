@@ -112,7 +112,7 @@ def chatbot_respond(user_input: str) -> dict:
     - If the answer is not found, reply: "Desculpa, não encontrei essa informação nos documentos."
     - Your answer must be entirely in European Portuguese.
     - If the knowledge is in English, you must translate it faithfully to Portuguese.
-
+    - Reply with clearly structured text, using paragraph breaks and lists where appropriate.
     The question: {user_input}
 
     The knowledge: {knowledge}
