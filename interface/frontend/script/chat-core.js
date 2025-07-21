@@ -9,13 +9,13 @@ const chatToggle = document.getElementById("chat-toggle");
 const input = document.getElementById("user-input");
 
 let can_reply = true;
-let first_open = true;
+
 
 function addMessage(text, sender, info_text) {
   const msg = document.createElement("div");
   msg.classList.add("message", sender);
 
-  if (sender === "bot") {
+  if (sender === "bot" && info_text != null) {
     const contentWrapper = document.createElement("div");
     contentWrapper.classList.add("bot-content");
 
@@ -61,31 +61,31 @@ function addMessage(text, sender, info_text) {
         infoBox.classList.remove("visible");
         msgText.classList.remove("hidden");
         copy_info = text;
-      } else {
+      }else {
         // Mostrar info e esconder texto normal
         msgText.classList.add("hidden");
         infoBox.classList.add("visible");
         copy_info = info_text;
       }
-    });
+      });
 
-  const buttonsWrapper = document.createElement("div");
-  buttonsWrapper.classList.add("buttons-wrapper");
+      const buttonsWrapper = document.createElement("div");
+      buttonsWrapper.classList.add("buttons-wrapper");
 
-// Adicionar os botões ao container
-buttonsWrapper.appendChild(toggleBtn);
-buttonsWrapper.appendChild(copyBtn);
-  
+      // Adicionar os botões ao container
+      buttonsWrapper.appendChild(toggleBtn);
+      buttonsWrapper.appendChild(copyBtn);
 
-  contentWrapper.appendChild(msgText);
 
-  if (info_text != null) {
-    contentWrapper.appendChild(infoBox);
-    contentWrapper.appendChild(buttonsWrapper);
+      contentWrapper.appendChild(msgText);
+
+      if (info_text != null) {
+        contentWrapper.appendChild(infoBox);
+        contentWrapper.appendChild(buttonsWrapper);
       
-      msg.appendChild(contentWrapper);
-    }
-  } else {
+        msg.appendChild(contentWrapper);
+      }
+  }else {
     msg.textContent = text;
   }
 

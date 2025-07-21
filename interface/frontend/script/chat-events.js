@@ -2,7 +2,7 @@ const charCounter = document.getElementById("char-counter");
 
 const maxChars = 100; // Limite de caracteres
 
-
+let first_open = true;
 
 // Evento de teclado para o input
 input.addEventListener("keydown", function (e) {
@@ -36,12 +36,12 @@ input.addEventListener("input", () => {
 // Evento de toggle do chat
 chatToggle.addEventListener("click", () => {
   chatWidget.classList.toggle("visible");
-  if (!chatWidget.classList.contains("visible")) {
+  if (chatWidget.classList.contains("visible")) {
     input.focus();
 
     if (first_open) {
       setTimeout(() => {
-        ("Olá! Como posso ajudar?", "bot");
+        addMessage("Olá! Como posso ajudar?", "bot",);
       }, 300);
       first_open = false;
     }
