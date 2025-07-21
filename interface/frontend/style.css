@@ -336,3 +336,12 @@ button[type="submit"]:hover {
 button:hover #enviar {
   color: var(--primary-color)
 }
+
+textarea {
+  line-height: 1.5rem; /* define a altura de linha base */
+  padding: 6px 8px;
+  resize: none;
+  overflow-y: hidden;
+  min-height: 1.5rem; /* altura inicial de 1 linha */
+  max-height: 4.5rem; /* ou 3 * line-height */
+}

@@ -13,13 +13,19 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// Evento de input para ajuste de altura
+// Evento de input para ajuste de altura e contador de caracteres
 input.addEventListener("input", () => {
-    input.style.height = "auto";
-    const maxHeight = parseInt(getComputedStyle(input).lineHeight) * 3;
-    input.style.overflowY = input.scrollHeight > maxHeight ? "auto" : "hidden";
-    input.style.height = Math.min(input.scrollHeight, maxHeight) + "px";
+    const lineHeight = parseInt(getComputedStyle(input).lineHeight);
+    const minHeight = lineHeight;
+    const maxHeight = lineHeight * 3;
 
+    input.style.height = "auto";
+
+    // Garante no mínimo 2 linhas e no máximo 3
+    const newHeight = Math.min(Math.max(input.scrollHeight, minHeight), maxHeight);
+    input.style.height = newHeight + "px";
+    input.style.overflowY = newHeight >= maxHeight ? "auto" : "hidden";
+    
     const remainingChars = (input.value.length - maxChars) * -1  ;
     charCounter.textContent = remainingChars;
     
