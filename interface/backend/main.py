@@ -55,19 +55,19 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
 
+
 def generate_suggestions(question:str, knowledge: str) -> list:
     prompt= f"""
-    Abaixo está uma pergunta de um utilizador e informação relevante retirada de documentos.
+    Based **only** on this information, suggest 3 related questions the user could ask next to get more details. The questions should be in European Portuguese and short, clear, and direct.
 
-    Baseando-te **apenas** nesta informação, sugere 3 perguntas relacionadas que o utilizador poderia fazer a seguir para obter mais detalhes. As perguntas devem ser em português europeu e curtas, claras e diretas.
-
-    ❓ Pergunta do utilizador:
+    User question:  
     {question}
 
-    📚 Informação relevante:
+    Relevant information:  
     {knowledge}
 
-    🎯 Gera apenas 3 perguntas diretamente relacionadas com o tema, uma por linha, sem explicações.
+    Generate only 3 directly related questions, one per line, with no explanations.
+
     """
    
 
@@ -131,15 +131,12 @@ def chatbot_respond(user_input: str) -> dict:
 
        
     related_suggestions = generate_suggestions(user_input,knowledge)
-
     return full_response , info, related_suggestions
-        
 
-    
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    reply, info, related_suggestions= chatbot_respond(request.text)
+    reply , info, related_suggestions= chatbot_respond(request.text)
     return {"reply": reply, "info": info, "related_suggestions": related_suggestions}
 

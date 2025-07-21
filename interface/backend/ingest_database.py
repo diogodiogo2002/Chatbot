@@ -70,4 +70,38 @@ for i in tqdm(range(0, len(chunks), batch_size), desc="Carregando"):
     uuid_batch = uuids[i:i+batch_size]
     vector_store.add_documents(documents=chunk_batch, ids=uuid_batch)
 
-print("✅ Base de dados Chroma criada com sucesso.")
+
+uuid_folder = next((f for f in os.listdir(CHROMA_PATH) if os.path.isdir(os.path.join(CHROMA_PATH, f))), None)
+required_files = [
+    "chroma.sqlite3",
+]
+
+index_required = [
+    "data_level0.bin",
+    "header.bin",
+    "index_metadata.pickle",
+    "length.bin",
+    "link_lists.bin"
+]
+
+if os.path.exists(CHROMA_PATH):
+    missing_main = [f for f in required_files if not os.path.exists(os.path.join(CHROMA_PATH, f))]
+    
+    if uuid_folder:
+        uuid_path = os.path.join(CHROMA_PATH, uuid_folder)
+        missing_index = [f for f in index_required if not os.path.exists(os.path.join(uuid_path, f))]
+    else:
+        missing_index = index_required  # Tudo está em falta se nem a pasta existir
+
+    if not missing_main and not missing_index:
+        print("✅ Base de dados Chroma criada com sucesso.")
+    else:
+        print("❌ A base de dados Chroma não foi criada corretamente.")
+        if missing_main:
+            print(f"  - Ficheiros principais em falta: {', '.join(missing_main)}")
+        if missing_index:
+            print(f"  - Ficheiros do índice em falta: {', '.join(missing_index)}")
+        exit(1)
+else:
+    print("❌ A pasta da base de dados Chroma não existe.")
+    exit(1)
