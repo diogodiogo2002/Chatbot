@@ -86,8 +86,8 @@ form.addEventListener("submit", async (e) => {
 
         suggestionBtn.addEventListener("click", () => {
           input.value = suggestion;
-          input.dispatchEvent(new Event("input")); // Atualiza o contador de caracteres
           form.requestSubmit();
+          charCounter.textContent = maxChars;
         });
 
         suggestionsBox.appendChild(suggestionBtn);

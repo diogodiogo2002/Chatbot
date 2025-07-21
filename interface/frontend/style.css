@@ -333,7 +333,6 @@ button[type="submit"]:hover {
   color: white;
 }
 
-
 button:hover #enviar {
   color: var(--primary-color)
 }
