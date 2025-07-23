@@ -244,7 +244,7 @@ button[type="submit"]:hover {
 }
 
 
-.info-toggle-outside, .copy-btn, .speak-btn {
+.info-toggle-outside, .copy-btn, .speak-btn, .positive-btn, .negative-btn {
   align-self: flex-start;
   background: transparent;
   border: 1px solid transparent;
@@ -261,7 +261,7 @@ button[type="submit"]:hover {
   margin-top: 8px;
 }
 
-.info-toggle-outside:hover, .copy-btn:hover, .speak-btn:hover{
+.info-toggle-outside:hover, .copy-btn:hover, .speak-btn:hover, .positive-btn:hover, .negative-btn:hover{
   color: var(--primary-color);
   background-color: white;
   transform: scale(1.3);
@@ -329,11 +329,24 @@ button[type="submit"]:hover {
   }
 }
 
+#chat-form button{
+  position: relative;
+}
+
+#trocar {
+  z-index: 1;
+}
+
 #enviar {
+  z-index: 2;
   color: white;
 }
 
 button:hover #enviar {
+  color: var(--primary-color)
+}
+
+button:hover #trocar{
   color: var(--primary-color)
 }
 
@@ -377,4 +390,20 @@ textarea {
   background-color: #f8d7da; /* vermelho claro */
   border-left: 4px solid #dc3545;
   padding-left: 8px;
+}
+
+
+.shrink-out {
+  animation: shrinkAndFade 0.3s ease forwards;
+}
+
+@keyframes shrinkAndFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
