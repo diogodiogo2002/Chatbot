@@ -345,3 +345,36 @@ textarea {
   min-height: 1.5rem; /* altura inicial de 1 linha */
   max-height: 4.5rem; /* ou 3 * line-height */
 }
+
+#quiz-container {
+  max-height: 300px;       /* Limita a altura para não ficar gigante */
+  overflow-y: auto;        /* Scroll vertical se conteúdo for maior */
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+.quiz-question {
+  margin-bottom: 15px;
+}
+.quiz-question h4 {
+  margin-bottom: 6px;
+}
+.quiz-options label {
+  display: block;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.quiz-question.correct {
+  background-color: #d4edda; /* verde claro */
+  border-left: 4px solid #28a745;
+  padding-left: 8px;
+}
+
+.quiz-question.incorrect {
+  background-color: #f8d7da; /* vermelho claro */
+  border-left: 4px solid #dc3545;
+  padding-left: 8px;
+}
