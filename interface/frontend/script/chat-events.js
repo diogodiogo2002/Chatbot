@@ -79,9 +79,12 @@ form.addEventListener("submit", async (e) => {
     const botReply = data.reply || "Erro ao responder 😵";
     const info_text = data.info || "Nenhuma informação adicional disponível.";
     const sugestions = data.related_suggestions || "Sem sugestões disponíveis.";
+    const quizData = data.quiz || [];
     addMessage(botReply, "bot", info_text);
-    
-    if (sugestions.length > 0) {
+    if (quizData.length > 0) {
+    renderQuiz(quizData);
+}
+    if (sugestions.length > 0 && quizData.lenght == 0) {
       const suggestionsBox = document.createElement("div");
       suggestionsBox.classList.add("suggestions-box");
 

@@ -15,6 +15,7 @@ const input = document.getElementById("user-input");
 let opinion = false;
 let can_reply = true;
 let speaking = false;
+let currentQuizData = [];
 
 
 function stopSpeaking() {
@@ -171,4 +172,111 @@ function addMessage(text, sender, info_text) {
 
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function renderQuiz(quiz) {
+  currentQuizData = quiz;
+  const chatBox = document.getElementById("chat-box");
+  
+  // Cria container do quiz dentro do chat
+  const quizDiv = document.createElement("div");
+  quizDiv.classList.add("quiz-message");
+  quizDiv.style.border = "1px solid #ddd";
+  quizDiv.style.padding = "10px";
+  quizDiv.style.margin = "10px 0";
+  quizDiv.style.borderRadius = "8px";
+  quizDiv.style.backgroundColor = "#f9f9f9";
+  quizDiv.style.position = "relative";
+
+  // Botão fechar no canto superior direito
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×"; // X
+  closeBtn.title = "Fechar quiz";
+  closeBtn.style.position = "absolute";
+  closeBtn.style.top = "5px";
+  closeBtn.style.right = "5px";
+  closeBtn.style.background = "transparent";
+  closeBtn.style.border = "none";
+  closeBtn.style.fontSize = "18px";
+  closeBtn.style.cursor = "pointer";
+
+  closeBtn.addEventListener("click", () => {
+    chatBox.removeChild(quizDiv);
+  });
+
+  quizDiv.appendChild(closeBtn);
+
+  quiz.forEach((item, index) => {
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("quiz-question");
+
+    const questionTitle = document.createElement("h4");
+    questionTitle.textContent = `${index + 1}. ${item.question}`;
+    questionDiv.appendChild(questionTitle);
+
+    const optionsDiv = document.createElement("div");
+    optionsDiv.classList.add("quiz-options");
+
+    for (const [key, option] of Object.entries(item.options)) {
+      const label = document.createElement("label");
+      label.style.display = "block";
+      label.style.marginBottom = "5px";
+      label.innerHTML = `
+        <input type="radio" name="q${index}" value="${key}">
+        ${key}: ${option}
+      `;
+      optionsDiv.appendChild(label);
+    }
+
+    questionDiv.appendChild(optionsDiv);
+    quizDiv.appendChild(questionDiv);
+  });
+
+  // Botão para submeter respostas
+  const submitBtn = document.createElement("button");
+  submitBtn.textContent = "Submeter Respostas";
+  submitBtn.style.marginTop = "10px";
+  submitBtn.style.padding = "5px 10px";
+  submitBtn.style.cursor = "pointer";
+
+  quizDiv.appendChild(submitBtn);
+
+  submitBtn.addEventListener("click", () => validateQuiz(quizDiv));
+
+  chatBox.appendChild(quizDiv);
+
+  // Scroll para o final para o utilizador ver o quiz
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
+function validateQuiz(quizContainer) {
+  let score = 0;
+
+  const questions = quizContainer.querySelectorAll(".quiz-question");
+
+  currentQuizData.forEach((item, index) => {
+    const selected = quizContainer.querySelector(`input[name="q${index}"]:checked`);
+    const questionDiv = questions[index];
+
+    // Limpar classes anteriores
+    questionDiv.classList.remove("correct", "incorrect");
+
+    if (!selected) {
+      questionDiv.classList.add("incorrect");
+      return;
+    }
+
+    if (selected.value === item.correct_answer) {
+      score++;
+      questionDiv.classList.add("correct");
+    } else {
+      questionDiv.classList.add("incorrect");
+    }
+  });
+
+  alert(`Acertaste ${score} de ${currentQuizData.length} perguntas!`);
+  if (score === currentQuizData.length) {
+    alert(`Parabéns! Respondeste corretamente a todas as perguntas do quiz!`);
+  }
 }
