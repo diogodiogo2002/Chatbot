@@ -55,6 +55,32 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
 
+def generate_quiz(question:str , knowledge: str) -> list:
+    prompt = """
+    Based **only** on this information, create a quiz with 5 questions in European Portuguese with 4 options (A, B, C, D) and the correct answer. The quiz should be clear and concise.
+
+    User question:  
+    {question}
+
+    Relevant information:  
+    {knowledge}
+
+    Generate the question in the following format:
+    Question: [Your question here]
+    A) [Option A]
+    B) [Option B]  
+    C) [Option C]
+    D) [Option D]
+
+    Correct answer: [A/B/C/D]
+    
+    Make sure to provide the correct answer at the end.
+
+    """
+    response = llm.invoke([HumanMessage(content=prompt.format(question=question, knowledge=knowledge))])
+    quiz_text = response.content if hasattr(response, 'content') else response
+    quiz_text = quiz_text.strip().split('\n')
+    return quiz_text
 
 def generate_suggestions(question:str, knowledge: str) -> list:
     prompt= f"""
@@ -131,12 +157,14 @@ def chatbot_respond(user_input: str) -> dict:
 
        
     related_suggestions = generate_suggestions(user_input,knowledge)
+    quiz = generate_quiz(user_input, knowledge)
     return full_response , info, related_suggestions
 
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    reply , info, related_suggestions= chatbot_respond(request.text)
-    return {"reply": reply, "info": info, "related_suggestions": related_suggestions}
+    reply , info, related_suggestions, quiz= chatbot_respond(request.text)
+    return {"reply": reply, "info": info, "related_suggestions": related_suggestions, "quiz":quiz}
+
 
