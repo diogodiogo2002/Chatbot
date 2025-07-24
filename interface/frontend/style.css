@@ -94,19 +94,6 @@ body {
   align-items: center;
 }
 
-.close-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  transition: transform var(--transition-fast);
-}
-
-.close-btn:hover {
-  transform: rotate(90deg);
-}
-
 /* Chat Messages */
 #chat-box {
   flex: 1;
@@ -432,6 +419,33 @@ textarea {
   border-top: 5px solid transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.quiz-message {
+  font-size: 14px;
+  color: #333;
+  margin-top: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin:  10px 0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.quiz-submit-btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+#chat-header{
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  color:green;
 }
 
 @keyframes spin {

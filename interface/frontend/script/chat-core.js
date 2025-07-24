@@ -8,6 +8,7 @@ const negativeSVG = `<svg viewBox="0 0 512 512" width="32" height="32"><path fil
 
 const form = document.getElementById("chat-form");
 const chatBox = document.getElementById("chat-box");
+const chatHeader = document.getElementById("chat-header");
 const chatWidget = document.getElementById("chat-widget");
 const chatToggle = document.getElementById("chat-toggle");
 const input = document.getElementById("user-input");
@@ -181,30 +182,6 @@ function renderQuiz(quiz, botMessageElement) {
   // Cria container do quiz dentro do chat
   const quizDiv = document.createElement("div");
   quizDiv.classList.add("quiz-message");
-  quizDiv.style.border = "1px solid #ddd";
-  quizDiv.style.padding = "10px";
-  quizDiv.style.margin = "10px 0";
-  quizDiv.style.borderRadius = "8px";
-  quizDiv.style.backgroundColor = "#f9f9f9";
-  quizDiv.style.position = "relative";
-
-  // Botão fechar no canto superior direito
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "×"; // X
-  closeBtn.title = "Fechar quiz";
-  closeBtn.style.position = "absolute";
-  closeBtn.style.top = "5px";
-  closeBtn.style.right = "5px";
-  closeBtn.style.background = "transparent";
-  closeBtn.style.border = "none";
-  closeBtn.style.fontSize = "18px";
-  closeBtn.style.cursor = "pointer";
-
-  closeBtn.addEventListener("click", () => {
-    chatBox.removeChild(quizDiv);
-  });
-
-  quizDiv.appendChild(closeBtn);
 
   quiz.forEach((item, index) => {
     const questionDiv = document.createElement("div");
@@ -235,9 +212,7 @@ function renderQuiz(quiz, botMessageElement) {
   // Botão para submeter respostas
   const submitBtn = document.createElement("button");
   submitBtn.textContent = "Submeter Respostas";
-  submitBtn.style.marginTop = "10px";
-  submitBtn.style.padding = "5px 10px";
-  submitBtn.style.cursor = "pointer";
+  submitBtn.classList.add("quiz-submit-btn");
 
   quizDiv.appendChild(submitBtn);
 

@@ -47,7 +47,7 @@ chatToggle.addEventListener("click", () => {
   chatWidget.classList.toggle("visible");
   if (chatWidget.classList.contains("visible")) {
     input.focus();
-
+    chatHeader.innerHTML = "Modo Principal ativado";
     if (first_open) {
       setTimeout(() => {
         addMessage("Olá! Como posso ajudar?", "bot",);
@@ -204,11 +204,11 @@ function switch_cor(){
     root.style.setProperty("--primary-color", "#0b1789");
     root.style.setProperty("--bot-bubble", "#0b1789");
     root.style.setProperty("--primary-light", "#1a2bb8");
-    chatBox.innerHTML = "Modo Principal ativado";
+    chatHeader.innerHTML = "Modo Principal ativado";
   } else {
     root.style.setProperty("--primary-color", "#247937ff");
     root.style.setProperty("--bot-bubble", "#247937ff");
     root.style.setProperty("--primary-light", "#44af5bff");
-    chatBox.innerHTML = "Modo Quiz ativado";
+    chatHeader.innerHTML = "Modo Quiz ativado";
   }
 }
