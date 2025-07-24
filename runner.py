@@ -7,7 +7,11 @@ import threading
 import uvicorn
 import signal
 import time
+import webbrowser
+import socket
 
+caminho_html = os.path.abspath("interface/frontend/index.html")
+host = "127.0.0.1"
 app = FastAPI()
 
 app.add_middleware(
@@ -26,8 +30,18 @@ modo_ativo = "main"
 processo_atual = None
 porta_modo = {"main": 8000, "quiz_main": 8001}  # Portas diferentes para cada modo
 
+def is_port_open(host, port, timeout=1):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.settimeout(timeout)
+        try:
+            s.connect((host, port))
+            return True
+        except:
+            return False
+
 def iniciar_modo(modo):
-    global processo_atual, modo_ativo
+    global processo_atual, modo_ativo, estado_pronto
+    estado_pronto = False
 
     if processo_atual and modo == modo_ativo:
         print(f"🔁 Modo {modo} já está ativo.")
@@ -46,7 +60,8 @@ def iniciar_modo(modo):
         return
 
     print(f"✅ A iniciar modo: {modo} na porta {porta_modo[modo]}")
-    
+
+
     # DEBUG EXTRA - mostra erros
     processo_atual = subprocess.Popen(
         comando,
@@ -78,8 +93,7 @@ async def mudar_modo(request: Request):
     print(f"📨 Novo modo recebido:", repr(corpo))  # 👈 MOSTRA EXACTAMENTE O QUE CHEGA
     iniciar_modo(corpo)
     return {"mensagem": f"Modo alterado para {corpo}", "porta": porta_modo.get(corpo, None)}
-
-
+           
 @app.get("/modo")
 def get_modo():
     return {"modo_ativo": modo_ativo, "porta": porta_modo[modo_ativo]}
@@ -90,3 +104,23 @@ def iniciar_api_controladora():
 if __name__ == "__main__":
     thread_api = threading.Thread(target=iniciar_api_controladora)
     thread_api.start()
+
+while not is_port_open(host, porta_modo[modo_ativo]):
+    print(f"Aguardando o servidor para o {modo_ativo} em {host}:{porta_modo[modo_ativo]}...")
+    time.sleep(3)
+print(f"Servidor ativo em {host}:{porta_modo[modo_ativo]}, abrindo o navegador...")
+webbrowser.open(f"file://{caminho_html}")
+   
+@app.get("/estado")
+def get_estado():
+    global estado_pronto
+    if is_port_open (host, porta_modo[modo_ativo]):
+        estado_pronto = True
+    
+    return {"pronto": estado_pronto}
+
+@app.post("/ativar")
+def ativar():
+    global estado_pronto
+    estado_pronto = True
+    return {"mensagem": "Servidor marcado como pronto", "pronto": estado_pronto}

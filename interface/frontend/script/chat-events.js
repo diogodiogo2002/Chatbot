@@ -57,6 +57,8 @@ chatToggle.addEventListener("click", () => {
   }
 });
 
+
+
 // Evento de submit do formulário
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -89,7 +91,7 @@ form.addEventListener("submit", async (e) => {
     if (quizData.length > 0) {
     renderQuiz(quizData);
 }
-    if (sugestions.length > 0 && quizData.lenght == 0) {
+    if (sugestions.length > 0 &&  quizData.length === 0) {
       const suggestionsBox = document.createElement("div");
       suggestionsBox.classList.add("suggestions-box");
 
@@ -118,15 +120,13 @@ form.addEventListener("submit", async (e) => {
 
 
 async function alternarModo() {
-  // Ativa overlay
+  // Ativa overlay no início
   loadingOverlay.style.display = "flex";
 
-  // Define o novo modo e nova porta
   const novoModo = ip === 8000 ? "quiz_main" : "main";
   const novaPorta = ip === 8000 ? 8001 : 8000;
 
   try {
-    // Muda o modo no controlador (FastAPI na porta 9000)
     const resposta = await fetch("http://127.0.0.1:9000/modo", {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
@@ -136,48 +136,68 @@ async function alternarModo() {
     const dados = await resposta.json();
     console.log("🔁 Modo alterado:", dados);
 
-    // Espera o servidor arrancar
     setTimeout(() => {
-      // Esconde overlay
-      loadingOverlay.style.display = "none";
 
-      // Atualiza cores
+      ip = novaPorta; // atualiza o IP após a troca
 
-      const root = document.documentElement;
-
-      if (novaPorta === 8000) {
-        root.style.setProperty("--primary-color", "#0b1789");
-        root.style.setProperty("--bot-bubble", "#0b1789");
-        root.style.setProperty("--primary-light", "#1a2bb8");
-      } else {
-        root.style.setProperty("--primary-color", "#247937ff");
-        root.style.setProperty("--bot-bubble", "#247937ff");
-        root.style.setProperty("--primary-light", "#44af5bff");
-      }
-
-      // Atualiza ip atual
-      ip = novaPorta;
-
-    }, 1500); // espera 1.5 segundos
+    }, 1500); // pequena espera para transição visual
 
   } catch (erro) {
     console.error("❌ Erro ao alternar modo:", erro);
-    loadingOverlay.style.display = "none";
+    loadingOverlay.style.display = "none"; // só desativa overlay se falhar
   }
 }
 
+let estadoInterval = null; // ← variável global para guardar o intervalo
 
+swapBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
 
+   if (estadoInterval !== null) {
+    clearInterval(estadoInterval);
+    estadoInterval = null;
+  }
+  await alternarModo();
 
+  estadoInterval = setInterval(async () => {
+    const pronto = await verificarEstado();
+    console.log(pronto);
+    if (pronto) {
+      loadingOverlay.style.display = "none";
+      clearInterval(estadoInterval);
+      estadoInterval = null; // limpa referência
+      console.log("✅ Servidor pronto");
+    
+      switch_cor();
+    }
+  }, 500);
 
-swapBtn.addEventListener("click", (e) =>{
-   e.preventDefault(); // prevenir envio do form
-   
-  setTimeout(() => {
-    loadingOverlay.style.display = "none";
-
-    alternarModo();
-
-  }, 2000);
+  
 });
 
+async function verificarEstado() {
+  try {
+    const resp = await fetch("http://127.0.0.1:9000/estado");
+    const dados = await resp.json();
+    return dados.pronto;
+  } catch (err) {
+    console.error("❌ Erro ao verificar estado:", err);
+    return false;
+  }
+}
+
+function switch_cor(){
+  const root = document.documentElement;    
+
+  if (getComputedStyle(root).getPropertyValue("--primary-color").trim() == "#247937ff") {
+    root.style.setProperty("--primary-color", "#0b1789");
+    root.style.setProperty("--bot-bubble", "#0b1789");
+    root.style.setProperty("--primary-light", "#1a2bb8");
+    chatBox.innerHTML = "Modo Principal ativado";
+  } else {
+    root.style.setProperty("--primary-color", "#247937ff");
+    root.style.setProperty("--bot-bubble", "#247937ff");
+    root.style.setProperty("--primary-light", "#44af5bff");
+    chatBox.innerHTML = "Modo Quiz ativado";
+  }
+}
