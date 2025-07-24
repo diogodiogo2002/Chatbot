@@ -1,7 +1,10 @@
 const charCounter = document.getElementById("char-counter");
+const swapBtn = document.getElementById("swap-btn");
+const loadingOverlay = document.getElementById("loading-overlay");
 
 const maxChars = 100; // Limite de caracteres
 
+let ip = 8000;
 let first_open = true;
 
 // Evento de teclado para o input
@@ -57,17 +60,19 @@ chatToggle.addEventListener("click", () => {
 // Evento de submit do formulário
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  const botaoQueSubmeteu = e.submitter; // <- aqui está o botão
+  
   if (!can_reply) return;
 
   const userText = input.value.trim();
   if (!userText) return;
 
-  addMessage(userText, "user", info_text = null);
+  addMessage(userText, "user", null);
   input.value = "";
   can_reply = false;
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/chat", {
+    const response = await fetch("http://127.0.0.1:"+ip+"/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,3 +115,69 @@ form.addEventListener("submit", async (e) => {
   }
   can_reply = true;
 });
+
+
+async function alternarModo() {
+  // Ativa overlay
+  loadingOverlay.style.display = "flex";
+
+  // Define o novo modo e nova porta
+  const novoModo = ip === 8000 ? "quiz_main" : "main";
+  const novaPorta = ip === 8000 ? 8001 : 8000;
+
+  try {
+    // Muda o modo no controlador (FastAPI na porta 9000)
+    const resposta = await fetch("http://127.0.0.1:9000/modo", {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: novoModo
+    });
+
+    const dados = await resposta.json();
+    console.log("🔁 Modo alterado:", dados);
+
+    // Espera o servidor arrancar
+    setTimeout(() => {
+      // Esconde overlay
+      loadingOverlay.style.display = "none";
+
+      // Atualiza cores
+
+      const root = document.documentElement;
+
+      if (novaPorta === 8000) {
+        root.style.setProperty("--primary-color", "#0b1789");
+        root.style.setProperty("--bot-bubble", "#0b1789");
+        root.style.setProperty("--primary-light", "#1a2bb8");
+      } else {
+        root.style.setProperty("--primary-color", "#247937ff");
+        root.style.setProperty("--bot-bubble", "#247937ff");
+        root.style.setProperty("--primary-light", "#44af5bff");
+      }
+
+      // Atualiza ip atual
+      ip = novaPorta;
+
+    }, 1500); // espera 1.5 segundos
+
+  } catch (erro) {
+    console.error("❌ Erro ao alternar modo:", erro);
+    loadingOverlay.style.display = "none";
+  }
+}
+
+
+
+
+
+swapBtn.addEventListener("click", (e) =>{
+   e.preventDefault(); // prevenir envio do form
+   
+  setTimeout(() => {
+    loadingOverlay.style.display = "none";
+
+    alternarModo();
+
+  }, 2000);
+});
+

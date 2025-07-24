@@ -55,55 +55,6 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
 
-def generate_quiz(question:str , knowledge: str) -> list:
-    prompt = """
-    Create a quiz with 5 multiple-choice questions based **only** on the information below.  
-    Each question must have 4 options (A, B, C, D), with only one correct answer.  
-    The questions must be written in European Portuguese.
-
-    Do not respond directly. Just generate multiple-choice questions in the following JSON format:
-
-    [
-        {{
-            "question": "What is the first production option in the red order?",
-            "options": {{
-                "A": "redOrder 1",
-                "B": "redOrder 2",
-                "C": "redOrder 3",
-                "D": "redOrder 4"
-            }},
-            "correct_answer": "A"
-        }},
-        ...
-    ]
-
-    Relevant information:
-    {knowledge}
-    """
-
-    response = llm.invoke([HumanMessage(content=prompt)])
-    quiz_text = response.content if hasattr(response, 'content') else response
-
-    if isinstance(quiz_text, list):
-        quiz_text = "\n".join(quiz_text)
-    else:
-        quiz_text = str(quiz_text)
-
-    quiz_text = quiz_text.strip()
-
-    try:
-        quiz = json.loads(quiz_text)
-        return quiz
-    except Exception as e:
-        print(f"⚠️ Erro ao fazer parsing do quiz: {e}")
-        print("🔍 Conteúdo recebido:\n", quiz_text)
-        return [{
-            "question": "Erro ao gerar quiz. Verifica o conteúdo ou tenta novamente.",
-            "options": {
-                "A": "", "B": "", "C": "", "D": ""
-            },
-            "correct_answer": ""
-        }]  
 
 def generate_suggestions(question:str, knowledge: str) -> list:
     prompt= f"""
@@ -180,14 +131,14 @@ def chatbot_respond(user_input: str) -> dict:
 
        
     related_suggestions = generate_suggestions(user_input,knowledge)
-    quiz = generate_quiz(user_input, knowledge)
-    return full_response , info, related_suggestions, quiz
+    
+    return full_response , info, related_suggestions
 
 
 # Endpoint para receber perguntas do frontend e responder
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    reply , info, related_suggestions, quiz= chatbot_respond(request.text)
-    return {"reply": reply, "info": info, "related_suggestions": related_suggestions, "quiz":quiz}
+    reply , info, related_suggestions= chatbot_respond(request.text)
+    return {"reply": reply, "info": info, "related_suggestions": related_suggestions}
 
 
