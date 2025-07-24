@@ -159,17 +159,28 @@ swapBtn.addEventListener("click", async (e) => {
   }
   await alternarModo();
 
+  let verificandoEstado = false;
+
   estadoInterval = setInterval(async () => {
+    
+    if (verificandoEstado) return;
+    verificandoEstado = true;
+    
     const pronto = await verificarEstado();
     console.log(pronto);
-    if (pronto) {
-      loadingOverlay.style.display = "none";
-      clearInterval(estadoInterval);
-      estadoInterval = null; // limpa referência
-      console.log("✅ Servidor pronto");
     
+    if (pronto) {
+      clearInterval(estadoInterval);
+      estadoInterval = null;
+      verificandoEstado = false;
+      
+      loadingOverlay.style.display = "none";
+      console.log("✅ Servidor pronto");
       switch_cor();
+      return;
     }
+    
+    verificandoEstado = false;
   }, 500);
 
   
