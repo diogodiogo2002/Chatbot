@@ -151,12 +151,15 @@ async function alternarModo() {
         root.style.setProperty("--primary-color", "#0b1789");
         root.style.setProperty("--bot-bubble", "#0b1789");
         root.style.setProperty("--primary-light", "#1a2bb8");
+        chat.innerHTML = "Modo Principal ativado"; 
+        
       } else {
         root.style.setProperty("--primary-color", "#247937ff");
         root.style.setProperty("--bot-bubble", "#247937ff");
         root.style.setProperty("--primary-light", "#44af5bff");
+        chatBox.innerHTML = "Modo Quiz ativado"; 
+        
       }
-
       // Atualiza ip atual
       ip = novaPorta;
 

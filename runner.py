@@ -92,8 +92,7 @@ async def mudar_modo(request: Request):
     print(f"📨 Novo modo recebido:", repr(corpo))  # 👈 MOSTRA EXACTAMENTE O QUE CHEGA
     iniciar_modo(corpo)
     return {"mensagem": f"Modo alterado para {corpo}", "porta": porta_modo.get(corpo, None)}
-
-
+           
 @app.get("/modo")
 def get_modo():
     return {"modo_ativo": modo_ativo, "porta": porta_modo[modo_ativo]}
@@ -110,3 +109,4 @@ while not is_port_open(host, porta_modo[modo_ativo]):
     time.sleep(3)
 print(f"Servidor ativo em {host}:{porta_modo[modo_ativo]}, abrindo o navegador...")
 webbrowser.open(f"file://{caminho_html}")
+
