@@ -174,7 +174,7 @@ function addMessage(text, sender, info_text) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function renderQuiz(quiz) {
+function renderQuiz(quiz, botMessageElement) {
   currentQuizData = quiz;
   const chatBox = document.getElementById("chat-box");
   
@@ -275,8 +275,9 @@ function validateQuiz(quizContainer) {
     }
   });
 
-  alert(`Acertaste ${score} de ${currentQuizData.length} perguntas!`);
+  addMessage(`Acertaste ${score} de ${currentQuizData.length} perguntas!`, "bot");
+
   if (score === currentQuizData.length) {
-    alert(`Parabéns! Respondeste corretamente a todas as perguntas do quiz!`);
+    addMessage("Parabéns! Respondeste corretamente a todas as perguntas do quiz!", "bot");
   }
 }
