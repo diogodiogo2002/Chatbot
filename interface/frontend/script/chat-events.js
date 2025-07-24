@@ -57,6 +57,8 @@ chatToggle.addEventListener("click", () => {
   }
 });
 
+
+
 // Evento de submit do formulário
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -89,7 +91,7 @@ form.addEventListener("submit", async (e) => {
     if (quizData.length > 0) {
     renderQuiz(quizData);
 }
-    if (sugestions.length > 0 && quizData.lenght == 0) {
+    if (sugestions.length > 0 &&  quizData.length === 0) {
       const suggestionsBox = document.createElement("div");
       suggestionsBox.classList.add("suggestions-box");
 
