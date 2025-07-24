@@ -110,17 +110,4 @@ while not is_port_open(host, porta_modo[modo_ativo]):
     time.sleep(3)
 print(f"Servidor ativo em {host}:{porta_modo[modo_ativo]}, abrindo o navegador...")
 webbrowser.open(f"file://{caminho_html}")
-   
-@app.get("/estado")
-def get_estado():
-    global estado_pronto
-    if is_port_open (host, porta_modo[modo_ativo]):
-        estado_pronto = True
-    
-    return {"pronto": estado_pronto}
 
-@app.post("/ativar")
-def ativar():
-    global estado_pronto
-    estado_pronto = True
-    return {"mensagem": "Servidor marcado como pronto", "pronto": estado_pronto}

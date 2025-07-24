@@ -189,15 +189,23 @@ async function verificarEstado() {
 function switch_cor(){
   const root = document.documentElement;    
 
-  if (getComputedStyle(root).getPropertyValue("--primary-color").trim() == "#247937ff") {
-    root.style.setProperty("--primary-color", "#0b1789");
-    root.style.setProperty("--bot-bubble", "#0b1789");
-    root.style.setProperty("--primary-light", "#1a2bb8");
-    chatBox.innerHTML = "Modo Principal ativado";
-  } else {
-    root.style.setProperty("--primary-color", "#247937ff");
-    root.style.setProperty("--bot-bubble", "#247937ff");
-    root.style.setProperty("--primary-light", "#44af5bff");
-    chatBox.innerHTML = "Modo Quiz ativado";
+      if (novaPorta === 8000) {
+        root.style.setProperty("--primary-color", "#0b1789");
+        root.style.setProperty("--bot-bubble", "#0b1789");
+        root.style.setProperty("--primary-light", "#1a2bb8");
+      } else {
+        root.style.setProperty("--primary-color", "#247937ff");
+        root.style.setProperty("--bot-bubble", "#247937ff");
+        root.style.setProperty("--primary-light", "#44af5bff");
+      }
+
+      // Atualiza ip atual
+      ip = novaPorta;
+
+    }, 1500); // espera 1.5 segundos
+
+  } catch (erro) {
+    console.error("❌ Erro ao alternar modo:", erro);
+    loadingOverlay.style.display = "none";
   }
 }
