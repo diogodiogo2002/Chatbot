@@ -1,3 +1,5 @@
+//const QuizSVG = 
+//const ChatSVG = 
 const charCounter = document.getElementById("char-counter");
 const swapBtn = document.getElementById("swap-btn");
 const loadingOverlay = document.getElementById("loading-overlay");
@@ -205,10 +207,12 @@ function switch_cor(){
     root.style.setProperty("--bot-bubble", "#0b1789");
     root.style.setProperty("--primary-light", "#1a2bb8");
     chatTitle.innerHTML = "Modo Principal ativado";
+    swapBtn.innerHTML = "ChatSVG"
   } else {
     root.style.setProperty("--primary-color", "#247937ff");
     root.style.setProperty("--bot-bubble", "#247937ff");
     root.style.setProperty("--primary-light", "#44af5bff");
     chatTitle.innerHTML = "Modo Quiz ativado";
+    swapBtn.innerHTML = "QuizSVG"
   }
 }

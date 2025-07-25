@@ -175,7 +175,7 @@ function addMessage(text, sender, info_text) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function renderQuiz(quiz, botMessageElement) {
+function renderQuiz(quiz) {
   currentQuizData = quiz;
   const chatBox = document.getElementById("chat-box");
   
@@ -256,3 +256,4 @@ function validateQuiz(quizContainer) {
     addMessage("Parabéns! Respondeste corretamente a todas as perguntas do quiz!", "bot");
   }
 }
+
