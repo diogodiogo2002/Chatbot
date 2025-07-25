@@ -70,10 +70,6 @@ body {
   flex-direction: column;
   overflow: hidden;
   z-index: 999;
-  /* REMOVA estas propriedades */
-  /* transform: translateY(20px); */
-  /* opacity: 0; */
-  /* transition: all var(--transition-medium); */
   display: none; /* Widget começa oculto */
 }
 
@@ -463,20 +459,23 @@ textarea {
   cursor: pointer;
 }
 
-#chat-header{
+#chat-title {
   font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
-  text-align: center;
-  font-weight: bold;
+  font-size: 20px;
   color: green;
-  display: flex;
-  gap: 6px;
+  font-weight: bold;
   background: #FFFFFF;
-  height: 12%;           /* Altura reduzida */
-  overflow: hidden;       /* Evita que o conteúdo ultrapasse */
-  align-items: center; 
-  margin-right: 10px;
+  overflow: hidden;
 }
+
+
+#chat-header {
+  display: flex;
+  justify-content: space-between; /* separa o texto e o botão */
+  align-items: center;            /* centraliza verticalmente */
+  padding: 10px;                  /* opcional */
+}
+
 
 @keyframes spin {
   to {

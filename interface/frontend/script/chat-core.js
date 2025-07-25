@@ -8,7 +8,7 @@ const negativeSVG = `<svg viewBox="0 0 512 512" width="32" height="32"><path fil
 
 const form = document.getElementById("chat-form");
 const chatBox = document.getElementById("chat-box");
-const chatHeader = document.getElementById("chat-header");
+const chatTitle = document.getElementById("chat-title");
 const chatWidget = document.getElementById("chat-widget");
 const chatToggle = document.getElementById("chat-toggle");
 const input = document.getElementById("user-input");
