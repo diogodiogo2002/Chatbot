@@ -100,9 +100,9 @@ function addMessage(text, sender, info_text) {
     positiveBtn.addEventListener("click", () => {
       positiveBtn.classList.add("shrink-out");
       negativeBtn.classList.add("shrink-out");
-
+      addMessage("Obrigado pelo teu feedback!", "bot");
       setTimeout(() => {
-        negativeBtn.remove();
+        positiveBtn.remove();
         negativeBtn.remove();
       }, 300);
     });
@@ -110,9 +110,9 @@ function addMessage(text, sender, info_text) {
     negativeBtn.addEventListener("click", () => {
       positiveBtn.classList.add("shrink-out");
       negativeBtn.classList.add("shrink-out");
-      
+      addMessage("Obrigado pelo teu feedback!", "bot");
       setTimeout(() => {
-        negativeBtn.remove();
+        positiveBtn.remove();
         negativeBtn.remove();
       }, 300);
     });
