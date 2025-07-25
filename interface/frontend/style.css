@@ -190,6 +190,29 @@ button[type="submit"]:hover {
   transform: scale(1.1);
 }
 
+button[type="swap"] {
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color:var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--transition-fast);
+}
+
+button[type="swap"]:hover {
+  background-color: transparent;
+  border-radius: 2px;
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
 /* Bot Message Content */
 .bot-content {
   position: relative;
@@ -442,10 +465,17 @@ textarea {
 
 #chat-header{
   font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   font-weight: bold;
-  color:green;
+  color: green;
+  display: flex;
+  gap: 6px;
+  background: #FFFFFF;
+  height: 12%;           /* Altura reduzida */
+  overflow: hidden;       /* Evita que o conteúdo ultrapasse */
+  align-items: center; 
+  margin-right: 10px;
 }
 
 @keyframes spin {

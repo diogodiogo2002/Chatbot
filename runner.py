@@ -5,7 +5,6 @@ import subprocess
 import os
 import threading
 import uvicorn
-import signal
 import time
 import webbrowser
 import socket
@@ -59,8 +58,6 @@ def iniciar_modo(modo):
         print("❌ Modo inválido")
         return
 
-    print(f"✅ A iniciar modo: {modo} na porta {porta_modo[modo]}")
-
 
     # DEBUG EXTRA - mostra erros
     processo_atual = subprocess.Popen(
@@ -110,7 +107,7 @@ while not is_port_open(host, porta_modo[modo_ativo]):
     time.sleep(3)
 print(f"Servidor ativo em {host}:{porta_modo[modo_ativo]}, abrindo o navegador...")
 webbrowser.open(f"file://{caminho_html}")
-   
+
 @app.get("/estado")
 def get_estado():
     global estado_pronto
