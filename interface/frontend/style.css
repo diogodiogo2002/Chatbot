@@ -182,6 +182,7 @@ button[type="submit"]:hover {
   border-radius: 2px;
   border-color: var(--primary-color);
   transform: scale(1.1);
+  color: var(--primary-color);
 }
 
 button[type="swap"] {
