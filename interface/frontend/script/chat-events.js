@@ -1,5 +1,6 @@
-//const QuizSVG = 
-//const ChatSVG = 
+const QuizSVG = `<svg viewBox="0 0 24 24" width="32" height="32"><path fill = "currentcolor" d="M12,19c-.829,0-1.5-.672-1.5-1.5,0-1.938,1.352-3.709,3.909-5.118,1.905-1.05,2.891-3.131,2.51-5.301-.352-2.003-1.997-3.648-4-4-1.445-.254-2.865,.092-4.001,.974-1.115,.867-1.816,2.164-1.922,3.559-.063,.825-.785,1.445-1.609,1.382-.826-.063-1.445-.783-1.382-1.609,.17-2.237,1.29-4.315,3.073-5.7C8.89,.278,11.149-.275,13.437,.126c3.224,.566,5.871,3.213,6.437,6.437,.597,3.399-1.018,6.794-4.017,8.447-1.476,.813-2.357,1.744-2.357,2.49,0,.828-.671,1.5-1.5,1.5Zm-1.5,3.5c0,.828,.672,1.5,1.5,1.5s1.5-.672,1.5-1.5-.672-1.5-1.5-1.5-1.5,.672-1.5,1.5Z"/></svg>`;
+const ChatSVG = `<svg viewBox="0 0 24 24" width="32" height="32"><path fill = "currentcolor" d="M24,11.246A12.011,12.011,0,1,0,12.017,24H18.5A5.507,5.507,0,0,0,24,18.5V11.34ZM21,18.5A2.5,2.5,0,0,1,18.5,21H12.017a9.041,9.041,0,0,1-6.731-3.011,8.926,8.926,0,0,1-2.227-7.034,9.038,9.038,0,0,1,7.788-7.882A9.484,9.484,0,0,1,12.02,3a8.933,8.933,0,0,1,5.739,2.066A9.038,9.038,0,0,1,21,11.389Z"/><path fill = "currentcolor" d="M9.5,11h3a1.5,1.5,0,0,0,0-3h-3a1.5,1.5,0,0,0,0,3Z"/><path fill = "currentcolor" d="M16.5,13h-7a1.5,1.5,0,0,0,0,3h7a1.5,1.5,0,0,0,0-3Z"/></svg>`;
+
 const charCounter = document.getElementById("char-counter");
 const swapBtn = document.getElementById("swap-btn");
 const loadingOverlay = document.getElementById("loading-overlay");
@@ -8,6 +9,8 @@ const maxChars = 100; // Limite de caracteres
 
 let ip = 8000;
 let first_open = true;
+
+swapBtn.innerHTML = ChatSVG;
 
 // Evento de teclado para o input
 input.addEventListener("keydown", function (e) {
@@ -207,12 +210,12 @@ function switch_cor(){
     root.style.setProperty("--bot-bubble", "#0b1789");
     root.style.setProperty("--primary-light", "#1a2bb8");
     chatTitle.innerHTML = "Modo Principal ativado";
-    swapBtn.innerHTML = "ChatSVG"
+    swapBtn.innerHTML = ChatSVG;
   } else {
     root.style.setProperty("--primary-color", "#247937ff");
     root.style.setProperty("--bot-bubble", "#247937ff");
     root.style.setProperty("--primary-light", "#44af5bff");
     chatTitle.innerHTML = "Modo Quiz ativado";
-    swapBtn.innerHTML = "QuizSVG"
+    swapBtn.innerHTML = QuizSVG;
   }
 }
