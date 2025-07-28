@@ -51,6 +51,7 @@ function addMessage(text, sender, info_text, isHTML = false) {
   msg.classList.add("message", sender);
 
   if (sender === "bot" && info_text != null) {
+    
     const contentWrapper = document.createElement("div");
     contentWrapper.classList.add("bot-content");
 
