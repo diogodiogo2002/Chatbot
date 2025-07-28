@@ -248,7 +248,7 @@ button[type="swap"]:hover {
 }
 
 
-.info-toggle-outside, .copy-btn, .speak-btn, .positive-btn, .negative-btn {
+.info-toggle-outside, .copy-btn, .speak-btn, .positive-btn, .negative-btn, .stats-btn {
   align-self: flex-start;
   background: transparent;
   border: 1px solid transparent;
@@ -265,7 +265,7 @@ button[type="swap"]:hover {
   margin-top: 8px;
 }
 
-.info-toggle-outside:hover, .copy-btn:hover, .speak-btn:hover, .positive-btn:hover, .negative-btn:hover{
+.info-toggle-outside:hover, .copy-btn:hover, .speak-btn:hover, .positive-btn:hover, .negative-btn:hover, .stats-btn:hover{
   color: var(--primary-color);
   background-color: white;
   transform: scale(1.3);

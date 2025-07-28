@@ -5,6 +5,7 @@ const speakSVG = `<svg viewBox="0 0 24 24"><path fill= "currentcolor" d="M24,17c
 const xSVG = `<svg   viewBox="0 0 24 24" width="32" height="32"><path fill = "currentcolor" d="M13.93,12L21.666,2.443c.521-.644,.422-1.588-.223-2.109-.645-.522-1.588-.421-2.109,.223l-7.334,9.06L4.666,.557c-1.241-1.519-3.56,.357-2.332,1.887l7.736,9.557L2.334,21.557c-.521,.644-.422,1.588,.223,2.109,.64,.519,1.586,.424,2.109-.223l7.334-9.06,7.334,9.06c.524,.647,1.47,.742,2.109,.223,.645-.521,.744-1.466,.223-2.109l-7.736-9.557Z"/></svg>`
 const positiveSVG = `<svg viewBox="0 0 512 512" width="32" height="32"><path fill = "currentcolor" d="M485.379,170.88c-22.148-27.445-55.547-43.367-90.815-43.293H351.25l1.913-11.222c7.798-45.716-22.94-89.097-68.656-96.895  c-5.03-0.858-10.128-1.256-15.23-1.188c-32.056-0.167-61.464,17.761-76.001,46.332l-32.135,62.973h-44.249  C52.364,127.658,0.07,179.951,0,244.48v106.266c0.07,64.529,52.364,116.822,116.892,116.892H372.1  c55.158-0.2,102.743-38.764,114.363-92.685l22.465-106.266C516.299,234.201,507.639,198.232,485.379,170.88z M63.759,350.745V244.48  c0-29.344,23.788-53.133,53.133-53.133h31.88v212.531h-31.88C87.548,403.878,63.759,380.09,63.759,350.745z M446.549,255.489  l-22.486,106.266c-5.273,24.506-26.897,42.035-51.964,42.124H212.531V167.139l37.533-73.557c3.978-7.446,11.886-11.937,20.318-11.54  c11.174,0.007,20.227,9.072,20.22,20.246c-0.001,1.128-0.096,2.254-0.284,3.366l-14.601,85.693h118.847  c29.344-0.003,53.135,23.783,53.138,53.127C447.703,248.176,447.316,251.867,446.549,255.489L446.549,255.489z"/></svg>`
 const negativeSVG = `<svg viewBox="0 0 512 512" width="32" height="32"><path fill = "currentcolor" d="M486.715,143.036c-11.609-53.966-59.222-92.571-114.422-92.775h-255.34C52.387,50.343,0.07,102.67,0,167.235v106.321  c0.07,64.562,52.391,116.882,116.953,116.953h44.251l32.173,63.006c14.81,28.863,44.709,46.829,77.146,46.356  c46.4,0.061,84.064-37.504,84.125-83.904c0.006-4.769-0.393-9.529-1.195-14.23l-1.914-11.227h43.336  c64.591,0,116.953-52.361,116.953-116.952c0-8.132-0.848-16.243-2.531-24.199L486.715,143.036z M63.792,273.556V167.235  c0-29.36,23.801-53.16,53.16-53.16h31.896v212.641h-31.896C87.593,326.716,63.792,302.916,63.792,273.556z M436.063,307.047  c-10.077,12.471-25.262,19.703-41.295,19.669H275.859l14.608,85.737c1.047,5.875-0.6,11.909-4.487,16.437  c-4.135,4.798-10.236,7.445-16.565,7.187c-8.051,0.085-15.459-4.385-19.138-11.546l-37.637-73.51V114.075h159.651  c25.092,0.074,46.738,17.63,51.991,42.167l22.497,106.321C450.131,278.248,446.189,294.607,436.063,307.047z"/></svg>`
+const statsSVG = `<svg  id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="32" height="32"><path fill = "currentcolor" d="M22.5,21H5.5A2.5,2.5,0,0,1,3,18.5V1.5a1.5,1.5,0,0,0-3,0v17A5.506,5.506,0,0,0,5.5,24h17a1.5,1.5,0,0,0,0-3Z"/><path fill = "currentcolor" d="M9.5,9A1.5,1.5,0,0,0,8,10.5v7a1.5,1.5,0,0,0,3,0v-7A1.5,1.5,0,0,0,9.5,9Z"/><path fill = "currentcolor" d="M14,13.5v4a1.5,1.5,0,0,0,3,0v-4a1.5,1.5,0,0,0-3,0Z"/><path fill = "currentcolor" d="M20,9.5v8a1.5,1.5,0,0,0,3,0v-8a1.5,1.5,0,0,0-3,0Z"/><path fill = "currentcolor" d="M6,7.5a1.487,1.487,0,0,0,.936-.329L9.214,5.35a2.392,2.392,0,0,1,3.191.176,5.43,5.43,0,0,0,7.3.3l3.764-3.185A1.5,1.5,0,1,0,21.531.355L17.768,3.54A2.411,2.411,0,0,1,14.526,3.4a5.389,5.389,0,0,0-7.186-.4L5.063,4.829A1.5,1.5,0,0,0,6,7.5Z"/></svg>`
 
 const form = document.getElementById("chat-form");
 const chatBox = document.getElementById("chat-box");
@@ -12,12 +13,11 @@ const chatTitle = document.getElementById("chat-title");
 const chatWidget = document.getElementById("chat-widget");
 const chatToggle = document.getElementById("chat-toggle");
 const input = document.getElementById("user-input");
-
 let opinion = false;
 let can_reply = true;
 let speaking = false;
 let currentQuizData = [];
-
+let feedbacks = [];
 
 function stopSpeaking() {
   if ('speechSynthesis' in window) {
@@ -46,7 +46,7 @@ function speakText(text) {
     speaking = false;
   };
 }
-function addMessage(text, sender, info_text) {
+function addMessage(text, sender, info_text, isHTML = false) {
   const msg = document.createElement("div");
   msg.classList.add("message", sender);
 
@@ -55,7 +55,11 @@ function addMessage(text, sender, info_text) {
     contentWrapper.classList.add("bot-content");
 
     const msgText = document.createElement("div");
-    msgText.innerText = text;
+    if (isHTML) {
+      msgText.innerHTML = text;
+    } else {
+      msgText.innerText = text;
+    }
     msgText.classList.add("bot-text");
 
     const infoBox = document.createElement("div");
@@ -83,6 +87,36 @@ function addMessage(text, sender, info_text) {
     negativeBtn.innerHTML = negativeSVG;
     negativeBtn.classList.add("negative-btn");
     
+    const statsBtn = document.createElement("button");
+    statsBtn.innerHTML = statsSVG;
+    statsBtn.classList.add("stats-btn");
+
+    statsBtn.addEventListener("click",showStats);
+
+    function showStats() {
+      if (feedbacks.length === 0) {
+        addMessage("Ainda não há feedbacks registrados.", "bot");
+        return;
+      }
+
+      const total = feedbacks.length;
+      const positivos = feedbacks.filter(fb => fb.type === "up").length;
+      const negativos = feedbacks.filter(fb => fb.type === "down").length;
+
+      const pctPos = ((positivos / total) * 100).toFixed(1);
+      const pctNeg = ((negativos / total) * 100).toFixed(1);
+
+      const statsMessage = `
+        📊 Estatísticas de feedback:
+        
+        - 👍 Positivos: (${pctPos}%)
+        - 👎 Negativos: (${pctNeg}%)
+      `;
+
+      addMessage(statsMessage, "bot",null,true);
+    }
+
+
     copyBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(msgText.innerText).then(() => {
         copyBtn.innerHTML = checkSVG;
@@ -93,9 +127,30 @@ function addMessage(text, sender, info_text) {
         console.error("Erro ao copiar para a área de transferência: ", err);
       });
     });
+    
+    function handleFeedback(type) {
+      // Encontra o texto da resposta relacionada
+      const responseElement = positiveBtn.closest(".bot-content")?.querySelector(".bot-text");
+      const responseText = responseElement ? responseElement.innerText : "Resposta não encontrada";
 
+      // Armazena ou envia
+      const feedbackData = {
+        type,                  // "up" ou "down"
+        response: responseText,
+        timestamp: new Date().toISOString()
+      };
 
-    positiveBtn.addEventListener("click", () => {
+      // Salva localmente
+      feedbacks.push(feedbackData);
+
+      // Envia opcionalmente para o backend
+      fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData)
+      }).catch(err => console.error("Erro ao enviar feedback:", err));
+
+      // Animação e mensagem (mantido igual ao seu)
       positiveBtn.classList.add("shrink-out");
       negativeBtn.classList.add("shrink-out");
       addMessage("Obrigado pelo teu feedback!", "bot");
@@ -103,18 +158,17 @@ function addMessage(text, sender, info_text) {
         positiveBtn.remove();
         negativeBtn.remove();
       }, 300);
+    }
+
+    positiveBtn.addEventListener("click", () => {
+      handleFeedback("up");
     });
 
     negativeBtn.addEventListener("click", () => {
-      positiveBtn.classList.add("shrink-out");
-      negativeBtn.classList.add("shrink-out");
-      addMessage("Obrigado pelo teu feedback!", "bot");
-      setTimeout(() => {
-        positiveBtn.remove();
-        negativeBtn.remove();
-      }, 300);
+      handleFeedback("down");
     });
 
+    
 
     toggleBtn.addEventListener("click", () => {
       const showingInfo = infoBox.classList.contains("visible");
@@ -155,7 +209,7 @@ function addMessage(text, sender, info_text) {
       buttonsWrapper.appendChild(toggleBtn);
       buttonsWrapper.appendChild(speakBtn)
       buttonsWrapper.appendChild(copyBtn);
-      
+      buttonsWrapper.appendChild(statsBtn);      
 
       contentWrapper.appendChild(msgText);
 
