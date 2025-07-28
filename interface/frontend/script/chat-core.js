@@ -83,10 +83,8 @@ function addMessage(text, sender, info_text) {
     negativeBtn.innerHTML = negativeSVG;
     negativeBtn.classList.add("negative-btn");
     
-    copy_info = text; 
-
     copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(copy_info).then(() => {
+      navigator.clipboard.writeText(msgText.innerText).then(() => {
         copyBtn.innerHTML = checkSVG;
         setTimeout(() => {
           copyBtn.innerHTML = copySVG;
