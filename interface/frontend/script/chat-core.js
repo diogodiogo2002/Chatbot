@@ -18,7 +18,7 @@ let can_reply = true;
 let speaking = false;
 let currentQuizData = [];
 let feedbacks = [];
-
+let resultMessageElement = null;
 function stopSpeaking() {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -46,7 +46,7 @@ function speakText(text) {
     speaking = false;
   };
 }
-function addMessage(text, sender, info_text, isHTML = false) {
+function addMessage(text, sender, info_text, isHTML = false, customClass="") {
   const msg = document.createElement("div");
   msg.classList.add("message", sender);
 
@@ -60,6 +60,12 @@ function addMessage(text, sender, info_text, isHTML = false) {
       msgText.innerHTML = text;
     } else {
       msgText.innerText = text;
+    }
+
+    
+
+    if (customClass) {
+      msgText.classList.add(customClass); // ← aqui está a chave
     }
     msgText.classList.add("bot-text");
 
@@ -280,7 +286,6 @@ function renderQuiz(quiz) {
 
 function validateQuiz(quizContainer) {
   let score = 0;
-
   const questions = quizContainer.querySelectorAll(".quiz-question");
 
   currentQuizData.forEach((item, index) => {
@@ -303,10 +308,27 @@ function validateQuiz(quizContainer) {
     }
   });
 
-  addMessage(`Acertaste ${score} de ${currentQuizData.length} perguntas!`, "bot");
+  const messageText = `Acertaste ${score} de ${currentQuizData.length} perguntas!`;
+  let resultMsg = quizContainer.querySelector(".quiz-result-message");
 
+  if (!resultMsg) {
+    resultMsg = document.createElement("div");
+    resultMsg.classList.add("bot-text", "quiz-result-message");
+    resultMsg.style.marginTop = "10px";
+    quizContainer.appendChild(resultMsg);
+  }
+
+  resultMsg.innerText = messageText;
+
+  // Mensagem extra de parabéns, sem repetir
   if (score === currentQuizData.length) {
-    addMessage("Parabéns! Respondeste corretamente a todas as perguntas do quiz!", "bot");
+    if (!quizContainer.querySelector(".quiz-congrats")) {
+      const congrats = document.createElement("div");
+      congrats.classList.add("bot-text", "quiz-congrats");
+      congrats.innerText = "Parabéns! Respondeste corretamente a todas as perguntas do quiz!";
+      congrats.style.marginTop = "5px";
+      quizContainer.appendChild(congrats);
+    }
   }
 }
 
