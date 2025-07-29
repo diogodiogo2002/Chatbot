@@ -166,7 +166,7 @@ function addMessage(text, sender, info_text, isHTML = false) {
     });
 
     negativeBtn.addEventListener("click", () => {
-      handleFeedback("down");
+      handleFeedback("down"); 
     });
 
     

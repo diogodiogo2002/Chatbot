@@ -67,7 +67,6 @@ chatToggle.addEventListener("click", () => {
 // Evento de submit do formulário
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const botaoQueSubmeteu = e.submitter; // <- aqui está o botão
   
   if (!can_reply) return;
 
