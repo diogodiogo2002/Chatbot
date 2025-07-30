@@ -374,11 +374,14 @@ textarea {
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
-.quiz-question {
-  margin-bottom: 15px;
+
+.quiz-congrats{
+  margin-top: 5px;
 }
+
 .quiz-question h4 {
   margin-bottom: 6px;
+  margin-bottom: 15px;
 }
 .quiz-options label {
   display: block;
@@ -452,6 +455,10 @@ textarea {
   position: relative;
 }
 
+.quiz-result-message{
+  margin-top: 10px;
+}
+
 .quiz-submit-btn {
   margin-top: 10px;
   padding: 5px 10px;
@@ -475,6 +482,10 @@ textarea {
   padding: 10px;                  /* opcional */
 }
 
+.option-label{
+  display: block;
+  margin-bottom: 5px;
+}
 
 @keyframes spin {
   to {

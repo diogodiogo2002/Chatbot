@@ -255,8 +255,7 @@ function renderQuiz(quiz) {
 
     for (const [key, option] of Object.entries(item.options)) {
       const label = document.createElement("label");
-      label.style.display = "block";
-      label.style.marginBottom = "5px";
+      label.classList.add("option-label");
       label.innerHTML = `
         <input type="radio" name="q${index}" value="${key}">
         ${key}: ${option}
@@ -314,7 +313,6 @@ function validateQuiz(quizContainer) {
   if (!resultMsg) {
     resultMsg = document.createElement("div");
     resultMsg.classList.add("bot-text", "quiz-result-message");
-    resultMsg.style.marginTop = "10px";
     quizContainer.appendChild(resultMsg);
   }
 
@@ -326,7 +324,6 @@ function validateQuiz(quizContainer) {
       const congrats = document.createElement("div");
       congrats.classList.add("bot-text", "quiz-congrats");
       congrats.innerText = "Parabéns! Respondeste corretamente a todas as perguntas do quiz!";
-      congrats.style.marginTop = "5px";
       quizContainer.appendChild(congrats);
     }
   }
