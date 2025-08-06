@@ -46,27 +46,27 @@ class ChatRequest(BaseModel):
 
 def generate_quiz(question: str, knowledge: str) -> list:
     prompt = f"""
-Cria um quiz com 5 perguntas de escolha múltipla baseadas **apenas** na informação abaixo.
-Cada pergunta deve ter 4 opções (A, B, C, D) e apenas uma resposta correta.
-As perguntas devem estar escritas em português europeu.
+Create a quiz with 5 multiple-choice questions based only on the information below.
+Each question must have 4 options (A, B, C, D) and only one correct answer.
+The questions must be written in European Portuguese.
 
-Responde apenas no seguinte formato JSON:
+Respond only in the following JSON format:
 
 [
     {{
-        "question": "Exemplo de pergunta",
+        "question": "Example question",
         "options": {{
-            "A": "Opção A",
-            "B": "Opção B",
-            "C": "Opção C",
-            "D": "Opção D"
+            "A": "Option A",
+            "B": "Option B",
+            "C": "Option C",
+            "D": "Option D"
         }},
         "correct_answer": "A"
     }},
     ...
 ]
 
-Informação relevante:
+Relevant information:
 {knowledge}
 """
 
