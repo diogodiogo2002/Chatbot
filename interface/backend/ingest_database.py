@@ -7,13 +7,6 @@ import os
 import shutil
 from tqdm import tqdm
 
-# import the .env file
-from dotenv import load_dotenv
-load_dotenv()
-
-
-
-# 
 DATA_PATH = r"docs" #Localização da pasta com os documentos PDF
 CHROMA_PATH = r"interface/backend/chroma_db" #Localização onde será criada a base de dados Chroma
 
