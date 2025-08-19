@@ -5,6 +5,7 @@ const charCounter = document.getElementById("char-counter");
 const swapBtn = document.getElementById("swap-btn");
 const loadingOverlay = document.getElementById("loading-overlay");
 
+const contador = 0;
 const maxChars = 100; // Limite de caracteres
 
 let ip = 8000;
@@ -77,6 +78,8 @@ form.addEventListener("submit", async (e) => {
   input.value = "";
   can_reply = false;
 
+  const startTime = performance.now();
+
   try {
     const response = await fetch("http://127.0.0.1:"+ip+"/chat", {
       method: "POST",
@@ -86,12 +89,16 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify({ text: userText}),
     });
 
+    const endTime = performance.now();
+    const elapsedTime = ((endTime - startTime) / 1000).toFixed(2);
+
     const data = await response.json();
     const botReply = data.reply || "Erro ao responder 😵";
     const info_text = data.info || "Nenhuma informação adicional disponível.";
     const sugestions = data.related_suggestions || "Sem sugestões disponíveis.";
     const quizData = data.quiz || [];
     addMessage(botReply, "bot", info_text);
+    addMessage(`⏱ Tempo de resposta: ${elapsedTime} segundos`, "info");
     if (quizData.length > 0) {
     renderQuiz(quizData);
 }

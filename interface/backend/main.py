@@ -28,7 +28,7 @@ llm = ChatOpenAI(
     model_name=MODEL_NAME
 )
 
-#Cria a base vetorial e transforma num retriever para consulta de documentos de 5 chunks
+#Inicializa a base de dados vetorial e usa um retriever para consulta de documentos de 10 chunks
 vector_store = Chroma(
     collection_name="example_collection",
     embedding_function=embeddings_model,
@@ -127,6 +127,7 @@ def chatbot_respond(user_input: str) -> dict:
         info = "\n\n🔗 Fontes consultadas:\n" 
 
     info += "".join(f"{src}" for src in sources)
+
 
 
        
