@@ -10,6 +10,7 @@ Este projeto implementa um chatbot baseado em RAG (Retrieval-Augmented Generatio
 │   ├── backend/
 │   │   ├── ingest_database.py  # Script para indexar documentos PDF
 │   │   ├── main.py             # Backend FastAPI com endpoint RAG
+│   │   ├── quiz_main.py        # Backend modo geração quiz
 │   │   └── chroma_db/          # Base de dados vetorial ChromaDB
 │   ├── frontend/
 │   │   ├── index.html          # Página principal do widget
@@ -98,14 +99,14 @@ python runner.py
 | ------------- | -------------------------------------------------------------------- |
 | Backend       | FastAPI, ChromaDB, LangChain, HuggingFace Embeddings                 |
 | LLM           | Mistral-7B-Instruct-v0.3 via Together AI                             |
-| Frontend      | HTML5, CSS3, JavaScript Vanilla                                      |
+| Frontend      | HTML, CSS, JavaScript                                                |
 | Processamento | Retrieval-Augmented Generation (RAG), Tradução via Google Translator |
 
 ## 📌 Notas Adicionais
 
 1. Otimizações implementadas:
 
-   - Carregamento rápido (<2s)
+   - Carregamento rápido (2-5s)
    - Baixo uso de memória
    - Compatibilidade com Chrome, Firefox e Edge
 
